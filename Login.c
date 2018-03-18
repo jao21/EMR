@@ -8,10 +8,10 @@ void compare_login(char entered_id[], char entered_pass[])
 	char pass[30];
 	char type[10];
 	int success = 0;
-	static const char admin = 'a';
-	static const char doctor = 'd';
-	static const char patient = 'p';
-	static const char auditor = 'u';
+	static const unsigned char admin = 'a';
+	static const unsigned char doctor = 'd';
+	static const unsigned char patient = 'p';
+	static const unsigned char auditor = 'u';
 	
 	//open file in read only mode
 	fp = fopen("test.txt", "r");
@@ -19,16 +19,16 @@ void compare_login(char entered_id[], char entered_pass[])
 	//if file does not exist print error and close program
 	if(fp == NULL)
 	{
-		puts("Error.  File does not exist");
-		return (EXIT_FAILURE);
+		printf("Error.  File does not exist");
+		exit(1);
 	}
 	
-	char buf[BUFSIZ] = "Garbage";
+	char buf[] = "Garbage";
 
 	//loop runs until it reaches the end of the file
 	while(fgets(buf, sizeof(buf), fp) != NULL)
 	{
-		fscanf(fp, "%s %s %s", id, pass, type);  //scan username, password, and account type from the file
+		fscanf_s(fp, "%s %s %s", id, sizeof(id), pass, sizeof(pass), type, sizeof(type));  //scan username, password, and account type from the file
 
 		if(strcmp(entered_id, id) == 0 && strcmp(entered_pass, pass) ==0)  //compare user entered credentials to the current credentials in the file
 		{
@@ -57,17 +57,27 @@ void compare_login(char entered_id[], char entered_pass[])
 	{
 		printf("Invalid Login!\n"); 
 		printf("Please enter your username\n");
-		scanf("%s", &id);
+		if(scanf_s("%s", &id, sizeof(id)) == EOF)
+		{
+			printf("I/O error");
+			exit(0);
+		}
 	
 		printf("Please enter your password\n");
 	
-		scanf("%s", &pass);
+		if(scanf_s("%s", &pass, sizeof(pass)) == EOF)
+		{
+			printf("I/O error");
+			exit(0);
+		}
 		printf("\n");
 		printf("Login: %s\n", &id);
 		printf("Password: %s\n\n", &pass);
 		
 		compare_login(id, pass); 	
 	}
+	
+	fclose(fp);
 }
 
 int main()
@@ -76,11 +86,19 @@ int main()
 	char pass[30];
 	
 	printf("Please enter your username\n");
-	scanf("%s", &id);
+	if(scanf_s("%s", &id, sizeof(id)) == EOF)
+	{
+		printf("I/O error");
+		exit(0);
+	}
 
 	printf("Please enter your password\n");
 
-	scanf("%s", &pass);
+	if(scanf_s("%s", &pass, sizeof(pass)) == EOF)
+	{
+		printf("I/O error");
+		exit(0);
+	}
 	printf("\n");
 	printf("Login: %s\n", &id);
 	printf("Password: %s\n\n", &pass);
