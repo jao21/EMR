@@ -4,8 +4,6 @@
 void compare_login(char entered_id[], char entered_pass[])
 {
 	FILE *fp;
-	char c;
-	int i;
 	char id[30];
 	char pass[30];
 	char type[10];
