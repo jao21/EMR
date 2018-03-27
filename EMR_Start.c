@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "Menus.h"
+
 
 void compare_login(char entered_id[], char entered_pass[])
 {
@@ -14,7 +16,7 @@ void compare_login(char entered_id[], char entered_pass[])
 	static const unsigned char auditor = 'u';
 	
 	//open file in read only mode
-	fp = fopen("test.txt", "r");
+	fp = fopen("LoginCredentials.txt", "r");
 	
 	//if file does not exist print error and close program
 	if(fp == NULL)
@@ -46,13 +48,17 @@ void compare_login(char entered_id[], char entered_pass[])
 	}
 	//print next appropriate menu based on the account type.  Code needs to be written for these menus
 	if(success == 1)
-		printf("Admin Menu");
+	//	printf("Admin Menu");
+		adminMenu();
 	else if(success == 2)
-		printf("Doctor Menu");
+	//	printf("Doctor Menu");
+		doctorMenu();
 	else if(success == 3)
-		printf("Patient Menu");
+	//	printf("Patient Menu");
+		patientMenu();
 	else if(success == 4)
-		printf("Auditor Menu");
+	//	printf("Auditor Menu");
+		auditorMenu();
 	else
 	{
 		printf("Invalid Login!\n"); 
