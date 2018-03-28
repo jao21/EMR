@@ -27,7 +27,6 @@ void adminMenu (void) //First menu for Admin
     while(getchar() == '\n')
     {
       char choice;
-      int inc = 0;
 
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Patient Records");
@@ -60,7 +59,6 @@ void doctorMenu (void) //First menu for Doctor
     while(getchar() == '\n')
     {
       char choice;
-      int inc = 0;
 
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Personal Medical Info");
@@ -124,7 +122,6 @@ void patientMenu (void) //First Menu for PAtient
     while(getchar() == '\n')
     {
       char choice;
-      int inc = 0;
 
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Personal Medical Info");
@@ -175,7 +172,6 @@ void auditorMenu (void) //First menu for Auditor
     while(getchar() == '\n')
     {
       char choice;
-      int inc = 0;
 
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Logs");

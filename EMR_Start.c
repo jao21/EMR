@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Menus.h"
 
+#define BUFFERSIZE 10
 
 void compare_login(char entered_id[], char entered_pass[])
 {
@@ -25,16 +27,23 @@ void compare_login(char entered_id[], char entered_pass[])
 		exit(1);
 	}
 	
-	char buf[] = "Garbage";
+	char buf[BUFFERSIZE];
 
 	//loop runs until it reaches the end of the file
 	while(fgets(buf, sizeof(buf), fp) != NULL)
 	{
-		fscanf_s(fp, "%s %s %s", id, sizeof(id), pass, sizeof(pass), type, sizeof(type));  //scan username, password, and account type from the file
+	//	fscanf_s(fp, "%s %s %s", id, sizeof(id), pass, sizeof(pass), type, sizeof(type));  //scan username, password, and account type from the file
 
+		if(fscanf(fp, "%s %s %s", id, pass, type) == EOF)
+		{
+			printf("error");
+			exit(0);
+		}
+		
 		if(strcmp(entered_id, id) == 0 && strcmp(entered_pass, pass) ==0)  //compare user entered credentials to the current credentials in the file
 		{
 			printf("You're logged in as %s\n\n", entered_id);
+			printf("Press enter to continue to the next menu");
 			//set success to match appropriate account type
 			if(*type == admin)
 				success = 1;
@@ -63,24 +72,31 @@ void compare_login(char entered_id[], char entered_pass[])
 	{
 		printf("Invalid Login!\n"); 
 		printf("Please enter your username\n");
-		if(scanf_s("%s", &id, sizeof(id)) == EOF)
+	if (fgets(id, BUFFERSIZE, stdin) != NULL)
+	{
+		size_t len = strlen(id);
+		if(len > 0 && id[len-1] =='\n')
 		{
-			printf("I/O error");
-			exit(0);
+			id[--len] = '\0';
 		}
+	}
+
+	printf("Please enter your password\n");
 	
-		printf("Please enter your password\n");
-	
-		if(scanf_s("%s", &pass, sizeof(pass)) == EOF)
+	if (fgets(pass, BUFFERSIZE, stdin) != NULL)
+	{
+		size_t len = strlen(pass);
+		if(len > 0 && pass[len-1] =='\n')
 		{
-			printf("I/O error");
-			exit(0);
+			pass[--len] = '\0';
 		}
-		printf("\n");
-		printf("Login: %s\n", &id);
-		printf("Password: %s\n\n", &pass);
+	}
 		
-		compare_login(id, pass); 	
+	printf("\n");
+	printf("Login: %s\n", &id);
+	printf("Password: %s\n\n", &pass);
+		
+	compare_login(id, pass); 	
 	}
 	
 	fclose(fp);
@@ -90,21 +106,29 @@ int main()
 {
 	char id[30];
 	char pass[30];
+
 	
 	printf("Please enter your username\n");
-	if(scanf_s("%s", &id, sizeof(id)) == EOF)
+	if (fgets(id, BUFFERSIZE, stdin) != NULL)
 	{
-		printf("I/O error");
-		exit(0);
+		size_t len = strlen(id);
+		if(len > 0 && id[len-1] =='\n')
+		{
+			id[--len] = '\0';
+		}
 	}
 
 	printf("Please enter your password\n");
 
-	if(scanf_s("%s", &pass, sizeof(pass)) == EOF)
+	if (fgets(pass, BUFFERSIZE, stdin) != NULL)
 	{
-		printf("I/O error");
-		exit(0);
+		size_t len = strlen(pass);
+		if(len > 0 && pass[len-1] =='\n')
+		{
+			pass[--len] = '\0';
+		}
 	}
+
 	printf("\n");
 	printf("Login: %s\n", &id);
 	printf("Password: %s\n\n", &pass);
