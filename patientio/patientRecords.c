@@ -207,19 +207,19 @@ void addPatientInfo(char *type, User *currentUser)
     }
     if (strncmp(type, "E-Prescriptions", 4) == 0)
     {
-      EPrescription *ePres = (EPrescription*)malloc(sizeof(EPrescription));
+      EPrescription *ePres1 = (EPrescription*)malloc(sizeof(EPrescription));
       
-      if(NULL == ePres)
+      if(NULL == ePres1)
 	  {
 		printf("Error");
 		exit(0);
 	  }
       
-      const int updatePres = LookUpPres(&presF, presP, ePres);
-      UpdatePres(updatePres, &presF, presP, ePres);
+      const int updatePres = LookUpPres(&presF, presP, ePres1);
+      UpdatePres(updatePres, &presF, presP, ePres1);
       fclose(presF);
-      free(ePres);
-      ePres = NULL;
+      free(ePres1);
+      ePres1 = NULL;
       free(presP);
       presP = NULL;
     }
@@ -980,41 +980,41 @@ void CreatePatientInfo(Patient *newPatient)
   const int catcherS = scanf(" %c", &newPatient->sex);
 }
 
-void CreateHistory(History *history)
+void CreateHistory(History *history1)
 {
   printf("Please enter the patient's height: ");
-  const int catcherS2 = scanf(" %d", &history->height);
+  const int catcherS2 = scanf(" %d", &history1->height);
 
   printf("Please enter their weight: ");
-  const int catcherS1 = scanf(" %d", &history->weight);
+  const int catcherS1 = scanf(" %d", &history1->weight);
 
   const int aCatcher = getchar();
   printf("Please enter their chief complaint: ");
-  const char* intCatcher8 = fgets(history->complaint, 200, stdin);
+  const char* intCatcher8 = fgets(history1->complaint, 200, stdin);
 
   printf("Please enter any past medical history: ");
-  const char* intCatcher7 = fgets(history->pastHistory, 700, stdin);
+  const char* intCatcher7 = fgets(history1->pastHistory, 700, stdin);
 
   printf("Please enter their systems review, if applicable: ");
-  const char* intCatcher6 = fgets(history->systemsReview, 400, stdin);
+  const char* intCatcher6 = fgets(history1->systemsReview, 400, stdin);
 
   printf("Please enter any family diseases: ");
-  const char* intCatcher5 = fgets(history->familyDiseases, 300, stdin);
+  const char* intCatcher5 = fgets(history1->familyDiseases, 300, stdin);
 
   printf("Please enter their social history: ");
-  const char* intCatcher4 = fgets(history->socialHistory, 600, stdin);
+  const char* intCatcher4 = fgets(history1->socialHistory, 600, stdin);
 
   printf("Please enter any regular medications: ");
-  const char* intCatcher3 = fgets(history->regularMeds, 200, stdin);
+  const char* intCatcher3 = fgets(history1->regularMeds, 200, stdin);
 
   printf("Please enter any allergies: ");
-  const char* intCatcher2 = fgets(history->allergies, 200, stdin);
+  const char* intCatcher2 = fgets(history1->allergies, 200, stdin);
 
   printf("Please enter their sexual history, if applicable: ");
-  const char* intCatcher1 = fgets(history->sexualHistory, 600, stdin);
+  const char* intCatcher1 = fgets(history1->sexualHistory, 600, stdin);
 
   printf("Conclusion: ");
-  const char* intCatcher = fgets(history->conclusion, 200, stdin);
+  const char* intCatcher = fgets(history1->conclusion, 200, stdin);
 
   printf("\n");
 }
@@ -1037,27 +1037,27 @@ void CreatePres(EPrescription *pres, User *currentUser)
   printf("\n");
 }
 
-void CreateVitals(Vitals *vitals)
+void CreateVitals(Vitals *vitals1)
 {
   printf("\nPlease enter their latest body temperature: ");
   double newTemp;
   const int catcherS3 = scanf(" %lf", &newTemp);
-  vitals->lastBodyTemperature = newTemp;
+  vitals1->lastBodyTemperature = newTemp;
 
   printf("\nPlease enter their latest heart rate: ");
   int newHeart;
   const int catcherS2 = scanf(" %d", &newHeart);
-  vitals->lastHeartRate = newHeart;
+  vitals1->lastHeartRate = newHeart;
 
   printf("\nPlease enter their latest respiratory rate: ");
   int newResp;
   const int catcherS11 = scanf(" %d", &newResp);
-  vitals->lastRespiratoryRate = newResp;
+  vitals1->lastRespiratoryRate = newResp;
 
   printf("\nPlease enter their latest blood pressure: ");
   int newBlood;
   const int catcherS = scanf(" %d", &newBlood);
-  vitals->lastBloodPressure = newBlood;
+  vitals1->lastBloodPressure = newBlood;
 
   printf("\n");
 }
@@ -1281,7 +1281,7 @@ void UpdatePres(int updatePres, FILE** file, EPrescription *newPres, EPrescripti
 
 void UpdateVitals(int updateVitals, FILE** file, Vitals *newVitals, Vitals *existingVitals)
 {
-  char choice = ' ';
+  unsigned char choice = ' ';
   /* add new patient? */
   if (updateVitals == 0)
   {
