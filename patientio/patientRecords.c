@@ -68,9 +68,9 @@ void addPatientInfo(char *type, User *currentUser)
   EPrescription *presP;
   Vitals *vitalP;
 
-  getchar();
+  const int aCatcher1 = getchar();
   printf("Please enter the patient's name: ");
-  fgets(patientP->name, 55, stdin);
+  const char* intCatcher44 = fgets(patientP->name, 55, stdin);
   const size_t len = strlen(patientP->name);
   if (len && (patientP->name[len-1] == '\n'))
   {
@@ -207,19 +207,19 @@ void addPatientInfo(char *type, User *currentUser)
     }
     if (strncmp(type, "E-Prescriptions", 4) == 0)
     {
-      EPrescription *ePres = (EPrescription*)malloc(sizeof(EPrescription));
+      EPrescription *ePres1 = (EPrescription*)malloc(sizeof(EPrescription));
       
-      if(NULL == ePres)
+      if(NULL == ePres1)
 	  {
 		printf("Error");
 		exit(0);
 	  }
       
-      const int updatePres = LookUpPres(&presF, presP, ePres);
-      UpdatePres(updatePres, &presF, presP, ePres);
+      const int updatePres = LookUpPres(&presF, presP, ePres1);
+      UpdatePres(updatePres, &presF, presP, ePres1);
       fclose(presF);
-      free(ePres);
-      ePres = NULL;
+      free(ePres1);
+      ePres1 = NULL;
       free(presP);
       presP = NULL;
     }
@@ -333,7 +333,7 @@ void updatePatientInfo(char *type, User *currentUser)
   printf("\n\n");
 
   char choice;
-  scanf(" %c", &choice);
+  const int catcherS1 = scanf(" %c", &choice);
 
   const int id = (choice - '0')-1;
   if (id > -1 && id < patientCount)
@@ -383,7 +383,7 @@ void updatePatientInfo(char *type, User *currentUser)
     }
     return;
   }
-  getchar();
+  const int aCatcher2 = getchar();
   printf("What do you wish to edit? \n");
 
   if (strncmp(type, "General", 4) == 0)
@@ -422,8 +422,8 @@ void updatePatientInfo(char *type, User *currentUser)
       printf("3. Latest respiratory rate\n");
       printf("4. Latest blood pressure\n\n");
   }
-  scanf(" %c", &choice);
-  getchar();
+  const int catcherS = scanf(" %c", &choice);
+  const int aCatcher1 = getchar();
 
   if (strncmp(type, "General", 4) == 0)
   {
@@ -431,7 +431,7 @@ void updatePatientInfo(char *type, User *currentUser)
     {
       char newName[55];
       printf("\n\nNew Name: ");
-      fgets (newName, 55, stdin);
+      const char* intCatcher16 = fgets (newName, 55, stdin);
       const size_t len = strlen(patientP->name);
       if (len && (patientP->name[len-1] == '\n'))
       {
@@ -444,28 +444,28 @@ void updatePatientInfo(char *type, User *currentUser)
     {
       char newDOB[11];
       printf("\n\nNew Date of Birth: ");
-      fgets (newDOB, 11, stdin);
+      const char* intCatcher15 = fgets (newDOB, 11, stdin);
       strcpy(patientP->dateOfBirth, newDOB);
     }
     else if (choice == '3')
     {
       char newAddress[60];
       printf("\n\nNew Address: ");
-      fgets (newAddress, 60, stdin);
+      const char* intCatcher14 = fgets (newAddress, 60, stdin);
       strcpy(patientP->address, newAddress);
     }
     else if (choice == '4')
     {
       char newInsurance[55];
       printf("\n\nNew Insurance Carrier: ");
-      fgets (newInsurance, 55, stdin);
+      const char* intCatcher13 = fgets (newInsurance, 55, stdin);
       strcpy(patientP->insurance, newInsurance);
     }
     else if (choice == '5')
     {
       printf("\n\nChange sex: ");
       char sex;
-      scanf(" %c", &sex);
+      const int catcherS2 = scanf(" %c", &sex);
 
       if (sex == 'M' || sex == 'm')
       {
@@ -498,77 +498,77 @@ void updatePatientInfo(char *type, User *currentUser)
       {
         int newHeight;
         printf("\n\nNew Height: ");
-        scanf(" %d", &newHeight);
+        const int catcherS22 = scanf(" %d", &newHeight);
         historyP->height = newHeight;
       }
       else if (choice == '2')
       {
         int newWeight;
         printf("\n\nNew Weight: ");
-        scanf(" %d", &newWeight);
+        const int catcherS17 = scanf(" %d", &newWeight);
         historyP->weight = newWeight;
       }
       else if (choice == '3')
       {
         char newComplaint[200];
         printf("\n\nNew Complaint: ");
-        fgets (newComplaint, 200, stdin);
+        const char* intCatcher11 = fgets (newComplaint, 200, stdin);
         strcpy(historyP->complaint, newComplaint);
       }
       else if (choice == '4')
       {
         char newPast[700];
         printf("\n\nNewest Past History: ");
-        fgets (newPast, 700, stdin);
+        const char* intCatcher10 = fgets (newPast, 700, stdin);
         strcpy(historyP->pastHistory, newPast);
       }
       else if (choice == '5')
       {
         char newReview[400];
         printf("\n\nNewest Systems Review: ");
-        fgets (newReview, 400, stdin);
+        const char* intCatcher9 = fgets (newReview, 400, stdin);
         strcpy(historyP->systemsReview, newReview);
       }
       else if (choice == '6')
       {
         char newDis[300];
         printf("\n\nNewest Family Diseases: ");
-        fgets (newDis, 300, stdin);
+        const char* intCatcher8 = fgets (newDis, 300, stdin);
         strcpy(historyP->familyDiseases, newDis);
       }
       else if (choice == '7')
       {
         char newSoc[600];
         printf("\n\nNewest Social History: ");
-        fgets (newSoc, 600, stdin);
+        const char* intCatcher7 = fgets (newSoc, 600, stdin);
         strcpy(historyP->socialHistory, newSoc);
       }
       else if (choice == '8')
       {
         char newMeds[200];
         printf("\n\nNewest Regular Medications: ");
-        fgets (newMeds, 200, stdin);
+        const char* intCatcher6 = fgets (newMeds, 200, stdin);
         strcpy(historyP->regularMeds, newMeds);
       }
       else if (choice == '9')
       {
         char newAll[200];
         printf("\n\nNewest Allergies: ");
-        fgets (newAll, 200, stdin);
+        const char* intCatcher5 = fgets (newAll, 200, stdin);
         strcpy(historyP->allergies, newAll);
       }
       else if (choice == '0')
       {
         char newSex[600];
         printf("\n\nNewest Sexual History: ");
-        fgets (newSex, 600, stdin);
+        const char* intCatcher4 = fgets (newSex, 600, stdin);
         strcpy(historyP->sexualHistory, newSex);
       }
       else if (choice == 'A')
       {
         char newCon[200];
         printf("\n\nNewest Conclusion: ");
-        fgets (newCon, 200, stdin);
+        const char* intCatcher3 = fgets (newCon, 200, stdin);
         strcpy(historyP->conclusion, newCon);
       }
       else
@@ -586,7 +586,7 @@ void updatePatientInfo(char *type, User *currentUser)
       {
         char newMeds[300];
         printf("\n\nNew Medications: ");
-        fgets (newMeds, 300, stdin);
+        const char* intCatcher2 = fgets (newMeds, 300, stdin);
         strcpy(presP->medications, newMeds);
         strcpy(presP->prescriber, currentUser->name);
       }
@@ -594,7 +594,7 @@ void updatePatientInfo(char *type, User *currentUser)
       {
         char newDos[150];
         printf("\n\nNew Dosage: ");
-        fgets (newDos, 150, stdin);
+        const char* intCatcher1 = fgets (newDos, 150, stdin);
         strcpy(presP->dosage, newDos);
         strcpy(presP->prescriber, currentUser->name);
       }
@@ -602,7 +602,7 @@ void updatePatientInfo(char *type, User *currentUser)
       {
         char newDir[600];
         printf("\n\nNew Directions: ");
-        fgets (newDir, 150, stdin);
+        const char* intCatcher = fgets (newDir, 150, stdin);
         strcpy(presP->directions, newDir);
         strcpy(presP->prescriber, currentUser->name);
       }
@@ -610,7 +610,7 @@ void updatePatientInfo(char *type, User *currentUser)
       {
         int newDAW;
         printf("\n\nNew DAW Code: ");
-        scanf(" %d", &newDAW);
+        const int catcherS4 = scanf(" %d", &newDAW);
         presP->daw = newDAW;
         strcpy(presP->prescriber, currentUser->name);
       }
@@ -634,28 +634,28 @@ void updatePatientInfo(char *type, User *currentUser)
       {
         double newTemp;
         printf("\n\nNewest body temperature: ");
-        scanf(" %lf", &newTemp);
+        const int catcherS3 = scanf(" %lf", &newTemp);
         vitalP->lastBodyTemperature = newTemp;
       }
       else if (choice == '2')
       {
         int newHeart;
         printf("\n\nNewest Heart Rate: ");
-        scanf(" %d", &newHeart);
+        const int catcherS2 = scanf(" %d", &newHeart);
         vitalP->lastHeartRate = newHeart;
       }
       else if (choice == '3')
       {
         int newResp;
         printf("\n\nNewest Respiratory Rate: ");
-        scanf(" %d", &newResp);
+        const int catcherS14 = scanf(" %d", &newResp);
         vitalP->lastRespiratoryRate = newResp;
       }
       else if (choice == '4')
       {
         int newBlood;
         printf("\n\nNewest Blood Pressure: ");
-        scanf(" %d", &newBlood);
+        const int catcherS31 = scanf(" %d", &newBlood);
         vitalP->lastBloodPressure = newBlood;
       }
       else
@@ -721,7 +721,7 @@ void removePatientInfo()
 
   printf("\n\n");
   char choice;
-  scanf(" %c", &choice);
+  const int catcherS = scanf(" %c", &choice);
 
   const int id = (choice - '0')-1;
 
@@ -738,7 +738,7 @@ void removePatientInfo()
   }
     printf("Delete %s? (y/n)", patientP->name);
 
-    scanf(" %c", &choice);
+    const int catcherS21 = scanf(" %c", &choice);
 
     if (choice == 'y' || choice == 'Y')
     {
@@ -780,9 +780,9 @@ void viewPatientInfoDoc(char *type)
   }
   if(displayAllPatients("General", &patientF) != 0)
   {
-    getchar();
+    const int aCatcher01 = getchar();
     char name[55];
-    fgets(name,55,stdin);
+    const char* intCatcher99 = fgets(name,55,stdin);
     const size_t len = strlen(name);
     if (len && (name[len-1] == '\n'))
     {
@@ -827,10 +827,10 @@ void viewPatientInfoPat(char *type, char *name)
     }
     while(!feof(patientF))
     {
-      fread(patientP, sizeof(Patient),1, patientF);
+      const size_t catcher3 = fread(patientP, sizeof(Patient),1, patientF);
       if(strcmp(patientP->name, name) == 0)
       {
-        getchar();
+        const int aCatcher4 = getchar();
         printf("Name: %s\n", patientP->name);
         printf("Date of Birth: %s\n", patientP->dateOfBirth);
         printf("Address: %s\n", patientP->address);
@@ -857,10 +857,10 @@ void viewPatientInfoPat(char *type, char *name)
     }
     while(!feof(historyF))
     {
-      fread(historyP, sizeof(History),1, historyF);
+      const size_t catcher2 = fread(historyP, sizeof(History),1, historyF);
       if(strcmp(historyP->name, name) == 0)
       {
-        getchar();
+        const int aCatcher3 = getchar();
         printf("Name: %s\n", historyP->name);
         printf("Height: %d\n", historyP->height);
         printf("Weight: %d\n", historyP->weight);
@@ -894,10 +894,10 @@ void viewPatientInfoPat(char *type, char *name)
     }
     while(!feof(presF))
     {
-      fread(presP, sizeof(EPrescription),1, presF);
+      const size_t catcher1 = fread(presP, sizeof(EPrescription),1, presF);
       if(strcmp(presP->name, name) == 0)
       {
-        getchar();
+        const int aCatcher2 = getchar();
         printf("Name: %s\n", presP->name);
         printf("Medications: %s\n", presP->medications);
         printf("Dosage: %s\n", presP->dosage);
@@ -924,10 +924,10 @@ void viewPatientInfoPat(char *type, char *name)
     }
     while(!feof(vitalF))
     {
-      fread(vitalP, sizeof(Vitals),1, vitalF);
+      const size_t catcher77 = fread(vitalP, sizeof(Vitals),1, vitalF);
       if(strcmp(vitalP->name, name) == 0)
       {
-        getchar();
+        const int aCatcher1 = getchar();
         printf("Name: %s\n", vitalP->name);
         printf("Latest body temperature: %f", vitalP->lastBodyTemperature);
         printf("\nLatest heart rate: %d", vitalP->lastHeartRate);
@@ -968,53 +968,53 @@ void viewPatientInfoPat(char *type, char *name)
 void CreatePatientInfo(Patient *newPatient)
 {
   printf("Please enter their date of birth: ");
-  fgets(newPatient->dateOfBirth, 11, stdin);
+  const char* intCatcher2 = fgets(newPatient->dateOfBirth, 11, stdin);
 
   printf("Please enter their address: ");
-  fgets(newPatient->address, 60, stdin);
+  const char* intCatcher1 = fgets(newPatient->address, 60, stdin);
 
   printf("Please enter their insurance carrier: ");
-  fgets(newPatient->insurance, 55, stdin);
+  const char* intCatcher = fgets(newPatient->insurance, 55, stdin);
 
   printf("Please enter their sex: ");
-  scanf(" %c", &newPatient->sex);
+  const int catcherS = scanf(" %c", &newPatient->sex);
 }
 
-void CreateHistory(History *history)
+void CreateHistory(History *history1)
 {
   printf("Please enter the patient's height: ");
-  scanf(" %d", &history->height);
+  const int catcherS2 = scanf(" %d", &history1->height);
 
   printf("Please enter their weight: ");
-  scanf(" %d", &history->weight);
+  const int catcherS1 = scanf(" %d", &history1->weight);
 
-  getchar();
+  const int aCatcher = getchar();
   printf("Please enter their chief complaint: ");
-  fgets(history->complaint, 200, stdin);
+  const char* intCatcher8 = fgets(history1->complaint, 200, stdin);
 
   printf("Please enter any past medical history: ");
-  fgets(history->pastHistory, 700, stdin);
+  const char* intCatcher7 = fgets(history1->pastHistory, 700, stdin);
 
   printf("Please enter their systems review, if applicable: ");
-  fgets(history->systemsReview, 400, stdin);
+  const char* intCatcher6 = fgets(history1->systemsReview, 400, stdin);
 
   printf("Please enter any family diseases: ");
-  fgets(history->familyDiseases, 300, stdin);
+  const char* intCatcher5 = fgets(history1->familyDiseases, 300, stdin);
 
   printf("Please enter their social history: ");
-  fgets(history->socialHistory, 600, stdin);
+  const char* intCatcher4 = fgets(history1->socialHistory, 600, stdin);
 
   printf("Please enter any regular medications: ");
-  fgets(history->regularMeds, 200, stdin);
+  const char* intCatcher3 = fgets(history1->regularMeds, 200, stdin);
 
   printf("Please enter any allergies: ");
-  fgets(history->allergies, 200, stdin);
+  const char* intCatcher2 = fgets(history1->allergies, 200, stdin);
 
   printf("Please enter their sexual history, if applicable: ");
-  fgets(history->sexualHistory, 600, stdin);
+  const char* intCatcher1 = fgets(history1->sexualHistory, 600, stdin);
 
   printf("Conclusion: ");
-  fgets(history->conclusion, 200, stdin);
+  const char* intCatcher = fgets(history1->conclusion, 200, stdin);
 
   printf("\n");
 }
@@ -1023,41 +1023,41 @@ void CreatePres(EPrescription *pres, User *currentUser)
 {
   strcpy(pres->prescriber, currentUser->name);
   printf("Please enter the patient's medications: ");
-  fgets(pres->medications, 300, stdin);
+  const char* intCatcher2 = fgets(pres->medications, 300, stdin);
 
   printf("Please enter the dosage information: ");
-  fgets(pres->dosage, 150, stdin);
+  const char* intCatcher1 = fgets(pres->dosage, 150, stdin);
 
   printf("Please enter directions: ");
-  fgets(pres->directions, 600, stdin);
+  const char* intCatcher = fgets(pres->directions, 600, stdin);
 
   printf("Please enter the DAW Code: ");
-  scanf(" %d", &pres->daw);
+  const int catcherS = scanf(" %d", &pres->daw);
 
   printf("\n");
 }
 
-void CreateVitals(Vitals *vitals)
+void CreateVitals(Vitals *vitals1)
 {
   printf("\nPlease enter their latest body temperature: ");
   double newTemp;
-  scanf(" %lf", &newTemp);
-  vitals->lastBodyTemperature = newTemp;
+  const int catcherS3 = scanf(" %lf", &newTemp);
+  vitals1->lastBodyTemperature = newTemp;
 
   printf("\nPlease enter their latest heart rate: ");
   int newHeart;
-  scanf(" %d", &newHeart);
-  vitals->lastHeartRate = newHeart;
+  const int catcherS2 = scanf(" %d", &newHeart);
+  vitals1->lastHeartRate = newHeart;
 
   printf("\nPlease enter their latest respiratory rate: ");
   int newResp;
-  scanf(" %d", &newResp);
-  vitals->lastRespiratoryRate = newResp;
+  const int catcherS11 = scanf(" %d", &newResp);
+  vitals1->lastRespiratoryRate = newResp;
 
   printf("\nPlease enter their latest blood pressure: ");
   int newBlood;
-  scanf(" %d", &newBlood);
-  vitals->lastBloodPressure = newBlood;
+  const int catcherS = scanf(" %d", &newBlood);
+  vitals1->lastBloodPressure = newBlood;
 
   printf("\n");
 }
@@ -1071,7 +1071,7 @@ int LookUpGeneralInfo(FILE** file, Patient *patientToLookUp, Patient *existingPa
   int recPosition = 0;
   while(!feof(*file))
   {
-    fread(existingPatient, sizeof(Patient),1, *file);
+    const size_t catcher4 = fread(existingPatient, sizeof(Patient),1, *file);
     recPosition++;
     if(strcmp(existingPatient->name, patientToLookUp->name) == 0)
     {
@@ -1086,7 +1086,7 @@ int LookUpHistory(FILE** file, History *historyToLookUp, History *existingHistor
   int recPosition = 0;
   while(!feof(*file))
   {
-    fread(existingHistory, sizeof(History),1, *file);
+    const size_t catcher3 = fread(existingHistory, sizeof(History),1, *file);
     recPosition++;
     if(strcmp(existingHistory->name, historyToLookUp->name) == 0)
     {
@@ -1100,7 +1100,7 @@ int LookUpPres(FILE** file, EPrescription *presToLookUp, EPrescription *existing
   int recPosition = 0;
   while(!feof(*file))
   {
-    fread(existingPres, sizeof(EPrescription),1, *file);
+    const size_t catcher2 = fread(existingPres, sizeof(EPrescription),1, *file);
     recPosition++;
     if(strcmp(existingPres->name, presToLookUp->name) == 0)
     {
@@ -1114,7 +1114,7 @@ int LookUpVitals(FILE** file, Vitals *vitalsToLookUp, Vitals *existingVitals)
   int recPosition = 0;
   while(!feof(*file))
   {
-    fread(existingVitals, sizeof(Vitals),1, *file);
+    const size_t catcher1 = fread(existingVitals, sizeof(Vitals),1, *file);
     recPosition++;
     if(strcmp(existingVitals->name, vitalsToLookUp->name) == 0)
     {
@@ -1154,7 +1154,7 @@ void UpdateGeneralInfo(int updatePatient, FILE** file, Patient *newPatient, Pati
     printf("\n");
   }
 
-  scanf(" %c", &choice);
+  const int catcherS = scanf(" %c", &choice);
   if (choice == 'Y' || choice == 'y')
   {
     if (updatePatient == 0)
@@ -1214,7 +1214,7 @@ void UpdateHistory(int updateHistory, FILE** file, History *newHistory, History 
   }
   printf("\n");
 
-  scanf(" %c", &choice);
+  const int catcherS = scanf(" %c", &choice);
   if (choice == 'Y' || choice == 'y')
   {
     if (updateHistory == 0)
@@ -1261,7 +1261,7 @@ void UpdatePres(int updatePres, FILE** file, EPrescription *newPres, EPrescripti
     printf("\n");
   }
 
-  scanf(" %c", &choice);
+  const int catcherS = scanf(" %c", &choice);
   if (choice == 'Y' || choice == 'y')
   {
     if (updatePres == 0)
@@ -1281,7 +1281,7 @@ void UpdatePres(int updatePres, FILE** file, EPrescription *newPres, EPrescripti
 
 void UpdateVitals(int updateVitals, FILE** file, Vitals *newVitals, Vitals *existingVitals)
 {
-  char choice = ' ';
+  unsigned char choice = ' ';
   /* add new patient? */
   if (updateVitals == 0)
   {
@@ -1308,7 +1308,7 @@ void UpdateVitals(int updateVitals, FILE** file, Vitals *newVitals, Vitals *exis
     printf("\n");
   }
 
-  scanf(" %c", &choice);
+  const int catcherS = scanf(" %c", &choice);
   if (choice == 'Y' || choice == 'y')
   {
     if (updateVitals == 0)
@@ -1335,7 +1335,7 @@ void AddPatientToFile(FILE** file, Patient *newPatient)
     exit(1);
   printf("Adding record for %s \n\n", newPatient->name);
 
-  fwrite(newPatient, sizeof(Patient),1,*file);
+  const size_t catcher = fwrite(newPatient, sizeof(Patient),1,*file);
 }
 
 void AddHistoryToFile(FILE** file, History *newHistory)
@@ -1346,7 +1346,7 @@ void AddHistoryToFile(FILE** file, History *newHistory)
     exit(1);
   printf("Adding record for %s \n\n", newHistory->name);
 
-  fwrite(newHistory, sizeof(History),1,*file);
+  const size_t catcher = fwrite(newHistory, sizeof(History),1,*file);
 }
 
 void AddPresToFile(FILE** file, EPrescription *newPres)
@@ -1357,7 +1357,7 @@ void AddPresToFile(FILE** file, EPrescription *newPres)
     exit(1);
   printf("Adding record for %s \n\n", newPres->name);
 
-  fwrite(newPres, sizeof(EPrescription),1,*file);
+  const size_t catcher = fwrite(newPres, sizeof(EPrescription),1,*file);
 }
 
 void AddVitToFile(FILE** file, Vitals *newVit)
@@ -1368,36 +1368,36 @@ void AddVitToFile(FILE** file, Vitals *newVit)
     exit(1);
   printf("Adding record for %s \n\n", newVit->name);
 
-  fwrite(newVit, sizeof(Vitals),1,*file);
+  const size_t catcher = fwrite(newVit, sizeof(Vitals),1,*file);
 }
 
 /* Update existing patient's record with new values */
 void UpdatePatientsFile(FILE** file, Patient *newPatient, int recPosition)
 {
-  fseek(*file, sizeof(Patient)*recPosition, SEEK_SET);
+  const int catcher1 = fseek(*file, sizeof(Patient)*recPosition, SEEK_SET);
   printf("Updating record for %s \n\n", newPatient->name);
-  fwrite(newPatient, sizeof(Patient),1,*file);
+  const size_t catcher = fwrite(newPatient, sizeof(Patient),1,*file);
 }
 
 void UpdateHistoryFile(FILE** file, History *newHistory, int recPosition)
 {
-  fseek(*file, sizeof(History)*recPosition, SEEK_SET);
+  const int catcher1 = fseek(*file, sizeof(History)*recPosition, SEEK_SET);
   printf("Updating record for %s \n\n", newHistory->name);
-  fwrite(newHistory, sizeof(History),1,*file);
+  const size_t catcher = fwrite(newHistory, sizeof(History),1,*file);
 }
 
 void UpdatePresFile(FILE** file, EPrescription *newPres, int recPosition)
 {
-  fseek(*file, sizeof(EPrescription)*recPosition, SEEK_SET);
+  const int catcher1 = fseek(*file, sizeof(EPrescription)*recPosition, SEEK_SET);
   printf("Updating record for %s \n\n", newPres->name);
-  fwrite(newPres, sizeof(EPrescription),1,*file);
+  const size_t catcher = fwrite(newPres, sizeof(EPrescription),1,*file);
 }
 
 void UpdateVitFile(FILE** file, Vitals *newVit, int recPosition)
 {
-  fseek(*file, sizeof(Vitals)*recPosition, SEEK_SET);
+  const int catcher1 = fseek(*file, sizeof(Vitals)*recPosition, SEEK_SET);
   printf("Updating record for %s \n\n", newVit->name);
-  fwrite(newVit, sizeof(Vitals),1,*file);
+  const size_t catcher = fwrite(newVit, sizeof(Vitals),1,*file);
 }
 
 /* display all names and return the number of records */
@@ -1407,7 +1407,7 @@ int displayAllPatients(char *type, FILE** file)
   if (strncmp(type, "General", 4) == 0)
   {
     Patient p;
-    fseek(*file, 0, SEEK_SET);
+    const int catcher3 = fseek(*file, 0, SEEK_SET);
     while(fread(&p, sizeof(Patient),1, *file))
     {
       id++;
@@ -1417,7 +1417,7 @@ int displayAllPatients(char *type, FILE** file)
   if (strncmp(type, "History", 4) == 0)
   {
     History h;
-    fseek(*file, 0, SEEK_SET);
+    const int catcher2 = fseek(*file, 0, SEEK_SET);
     while(fread(&h, sizeof(History),1, *file))
     {
       id++;
@@ -1427,7 +1427,7 @@ int displayAllPatients(char *type, FILE** file)
   if (strncmp(type, "E-Prescriptions", 4) == 0)
   {
     EPrescription e;
-    fseek(*file, 0, SEEK_SET);
+    const int catcher1 = fseek(*file, 0, SEEK_SET);
     while(fread(&e, sizeof(EPrescription),1, *file))
     {
       id++;
@@ -1437,7 +1437,7 @@ int displayAllPatients(char *type, FILE** file)
   if (strncmp(type, "Vitals", 4) == 0)
   {
     Vitals v;
-    fseek(*file, 0, SEEK_SET);
+    const int catcher = fseek(*file, 0, SEEK_SET);
     while(fread(&v, sizeof(Vitals),1, *file))
     {
       id++;
@@ -1449,41 +1449,41 @@ int displayAllPatients(char *type, FILE** file)
 
 void fillPatientTable(FILE** file, Patient patientTable[], int size)
 {
-  fseek(*file, 0, SEEK_SET);
+  const int catcher1 = fseek(*file, 0, SEEK_SET);
   int i;
   for (i = 0; i < size; i++)
   {
     Patient p;
-    fread(&p, sizeof(Patient),1, *file);
+    const size_t catcher = fread(&p, sizeof(Patient),1, *file);
     patientTable[i] = p;
   }
 }
 
 void GetGeneralAtPosition(FILE **file, int id, Patient *retrievedPatient)
 {
-  fseek(*file, sizeof(Patient)*id, SEEK_SET);
-  fread(retrievedPatient, sizeof(Patient),1,*file);
+  const int catcher1 = fseek(*file, sizeof(Patient)*id, SEEK_SET);
+  const size_t catcher = fread(retrievedPatient, sizeof(Patient),1,*file);
   printf("Patient found: %s \n\n", retrievedPatient->name);
 }
 
 void GetHistoryAtPosition(FILE **file, int id, History *retrievedHistory)
 {
-  fseek(*file, sizeof(History)*id, SEEK_SET);
-  fread(retrievedHistory, sizeof(History),1,*file);
+  const int catcher1 = fseek(*file, sizeof(History)*id, SEEK_SET);
+  const size_t catcher = fread(retrievedHistory, sizeof(History),1,*file);
   printf("Patient found: %s \n\n", retrievedHistory->name);
 }
 
 void GetPresAtPosition(FILE **file, int id, EPrescription *retrievedPres)
 {
-  fseek(*file, sizeof(EPrescription)*id, SEEK_SET);
-  fread(retrievedPres, sizeof(EPrescription),1,*file);
+  const int catcher1 = fseek(*file, sizeof(EPrescription)*id, SEEK_SET);
+  const size_t catcher = fread(retrievedPres, sizeof(EPrescription),1,*file);
   printf("Patient found: %s \n\n", retrievedPres->name);
 }
 
 void GetVitalsAtPosition(FILE **file, int id, Vitals *retrievedVitals)
 {
-  fseek(*file, sizeof(Vitals)*id, SEEK_SET);
-  fread(retrievedVitals, sizeof(Vitals),1,*file);
+  const int catcher1 = fseek(*file, sizeof(Vitals)*id, SEEK_SET);
+  const size_t catcher = fread(retrievedVitals, sizeof(Vitals),1,*file);
   printf("Patient found: %s \n\n", retrievedVitals->name);
 }
 
@@ -1536,38 +1536,38 @@ void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE 
   while(!feof(*hFile))
   {
     position++;
-    fread(hist, sizeof(History),1, *hFile);
+    const size_t catcher51 = fread(hist, sizeof(History),1, *hFile);
     if(strcmp(hist->name, oldName) == 0)
     {
       strcpy(hist->name, newName);
-      fseek(*hFile, sizeof(History)*position, SEEK_SET);
-      fwrite(hist, sizeof(History),1,*hFile);
+       const int catcher3 = fseek(*hFile, sizeof(History)*position, SEEK_SET);
+      const size_t catcher4 = fwrite(hist, sizeof(History),1,*hFile);
       break;
     }
   }
   position = -1;
   while(!feof(*prFile))
   {
-    fread(pres, sizeof(EPrescription),1, *prFile);
+    const size_t catcher3 = fread(pres, sizeof(EPrescription),1, *prFile);
     position++;
     if(strcmp(pres->name, oldName) == 0)
     {
       strcpy(pres->name, newName);
-      fseek(*prFile, sizeof(EPrescription)*position, SEEK_SET);
-      fwrite(pres, sizeof(EPrescription),1,*prFile);
+      const int catcher2 = fseek(*prFile, sizeof(EPrescription)*position, SEEK_SET);
+      const size_t catcher1 = fwrite(pres, sizeof(EPrescription),1,*prFile);
       break;
     }
   }
   position = -1;
   while(!feof(*vFile))
   {
-    fread(vital, sizeof(Vitals),1, *vFile);
+    const size_t catcher2 = fread(vital, sizeof(Vitals),1, *vFile);
     position++;
     if(strcmp(vital->name, oldName) == 0)
     {
       strcpy(vital->name, newName);
-      fseek(*vFile, sizeof(Vitals)*position, SEEK_SET);
-      fwrite(vital, sizeof(Vitals),1,*vFile);
+      const int catcher1 = fseek(*vFile, sizeof(Vitals)*position, SEEK_SET);
+      const size_t catcher = fwrite(vital, sizeof(Vitals),1,*vFile);
       break;
     }
   }
@@ -1606,7 +1606,7 @@ void RewritePatientsFile(FILE** file, Patient patientTable[], int size, Patient 
     }
     else
     {
-      fwrite(&p, sizeof(Patient),1, *file);
+      const size_t catcher = fwrite(&p, sizeof(Patient),1, *file);
     }
   }
 }
