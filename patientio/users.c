@@ -18,12 +18,19 @@ void GetUserAtPosition(FILE **file, int id, User *retrievedUser);
 void fillUserTable(FILE** file, User *userTable, int size);
 void RewriteUsersFile(FILE** file, User *userTable, int size, User *userToRemove);
 void getUserByName(FILE** file, char *name, User *retrievedUser);
+void clearInteger(int num);
 
 /* Menu option to add a user account */
 void addUserAccount()
 {
   FILE *userF;
   User *userP = (User*)malloc(sizeof(User));
+  
+    if(NULL == userP)
+	{
+		printf("Error");
+		exit(0);
+	}
 
   if (OpenFile(&userF, "users.dat") == 1)
   {
@@ -34,11 +41,19 @@ void addUserAccount()
   CreateUserInfo(userP);
 
   User *exUserP = (User*)malloc(sizeof(User));
-  int updateUser = LookUpUser(&userF, userP, exUserP);
+  
+    if(NULL == exUserP)
+	{
+		printf("Error");
+		exit(0);
+	}
+	
+  const int updateUser = LookUpUser(&userF, userP, exUserP);
 
   UpdateAccounts(updateUser, &userF, userP, exUserP);
   fclose(userF);
   free(userP);
+  userP = NULL;
   free(exUserP);
 }
 
@@ -47,6 +62,12 @@ void updateUserAccount()
 {
   FILE *userF;
   User *userP = (User*)malloc(sizeof(User));
+  
+    if(NULL == userP)
+	{
+		printf("Error");
+		exit(0);
+	}
 
   if (OpenFile(&userF, "users.dat") == 1)
   {
@@ -56,13 +77,13 @@ void updateUserAccount()
 
   printf("Please enter the ID for the user to update \n\n");
 
-  int userCount = displayAllUsers(&userF);
+  const int userCount = displayAllUsers(&userF);
 
   printf("\n\n");
   char choice;
   scanf(" %c", &choice);
 
-  int id = (choice - '0')-1;
+  const int id = (choice - '0')-1;
 
   if (id > -1 && id < userCount)
   {
@@ -153,6 +174,12 @@ void removeUserAccount()
   FILE *userF;
   User userTable[MAX_USERS];
   User *userP = (User*)malloc(sizeof(User));
+  
+    if(NULL == userP)
+	{
+		printf("Error");
+		exit(0);
+	}
 
   if (OpenFile(&userF, "users.dat") == 1)
   {
@@ -162,7 +189,7 @@ void removeUserAccount()
 
   printf("Please enter the ID for the user to remove \n\n");
 
-  int userCount = displayAllUsers(&userF);
+  const int userCount = displayAllUsers(&userF);
   fillUserTable(&userF, userTable, userCount);
 
   printf("User count is %d\n", userCount);
@@ -171,7 +198,7 @@ void removeUserAccount()
   char choice;
   scanf(" %c", &choice);
 
-  int id = (choice - '0')-1;
+  const int id = (choice - '0')-1;
 
   if (id > -1 && id < userCount)
   {
@@ -210,6 +237,12 @@ void viewUserAccount()
 {
   FILE *userF;
   User *userP = (User*)malloc(sizeof(User));
+  
+    if(NULL == userP)
+	{
+		printf("Error");
+		exit(0);
+	}
 
   if (OpenFile(&userF, "users.dat") == 1)
   {
@@ -219,12 +252,12 @@ void viewUserAccount()
 
   printf("Please enter the ID for the user to view \n\n");
 
-  int userCount = displayAllUsers(&userF);
+  const int userCount = displayAllUsers(&userF);
   printf("\n\n");
   char choice;
   scanf(" %c", &choice);
 
-  int id = (choice - '0')-1;
+  const int id = (choice - '0')-1;
 
   if (id > -1 && id < userCount)
   {
@@ -258,6 +291,12 @@ int compareAccounts(User *userToCompare)
 {
   FILE *userF;
   User *userP = (User*)malloc(sizeof(User));
+  
+    if(NULL == userP)
+	{
+		printf("Error");
+		exit(0);
+	}
 
   if (OpenFile(&userF, "users.dat") == 1)
   {
@@ -268,7 +307,7 @@ int compareAccounts(User *userToCompare)
   int found = 1;
   while(!feof(userF))
   {
-    fread(userP, sizeof(User),1, userF);
+    const size_t catcher = fread(userP, sizeof(User),1, userF);
     if((strncmp(userP->userName, userToCompare->userName, 15) == 0)
     && (strncmp(userP->password, userToCompare->password, 15) == 0))
     {
@@ -301,28 +340,28 @@ void CreateUserInfo(User *newUser)
   getchar();
   printf("Please enter the user's name: ");
   fgets(newUser->name, 55, stdin);
-  size_t len = strlen(newUser->name);
+  const size_t len = strlen(newUser->name);
   if (len && (newUser->name[len-1] == '\n'))
   {
     newUser->name[len-1] = '\0';
   }
 
   printf("Please enter their username: ");
-  fgets(newUser->userName, 15, stdin);
+  const char* catcher1 = fgets(newUser->userName, 15, stdin);
 
 
   printf("Please enter their password: ");
-  fgets(newUser->password, 15, stdin);
+  const char* catcher2 = fgets(newUser->password, 15, stdin);
 
 
   printf("Please enter their role: ");
-  fgets(role, 8, stdin);
+  const char* catcher3 = fgets(role, 8, stdin);
   strcpy(newUser->role, role);
 
   if((strncmp(newUser->role, "Doc", 3) == 0) || (strncmp(newUser->role, "doc", 3) == 0))
   {
     printf("Please enter their department: ");
-    fgets(newUser->department, 50, stdin);
+    const char* catcher4 = fgets(newUser->department, 50, stdin);
   }
   else
   {
@@ -335,7 +374,7 @@ int LookUpUser(FILE** file, User *userToLookUp, User *existingUser)
   int recPosition = 0;
   while(!feof(*file))
   {
-    fread(existingUser, sizeof(User),1, *file);
+    const size_t catcher = fread(existingUser, sizeof(User),1, *file);
     recPosition++;
     if(strcmp(existingUser->name, userToLookUp->name) == 0)
     {
@@ -352,7 +391,7 @@ int LookUpUser(FILE** file, User *userToLookUp, User *existingUser)
 
 void UpdateAccounts(int updateUser, FILE** file, User *newUser, User *existingUser)
 {
-  char choice = ' ';
+  unsigned char choice = ' ';
   /* add new user? */
   if (updateUser == 0)
   {
@@ -416,7 +455,7 @@ void UpdateAccounts(int updateUser, FILE** file, User *newUser, User *existingUs
   {
     if (updateUser == 0)
     {
-      AddUserToFile(file, newUser);
+      const int catcher = AddUserToFile(file, newUser);
     }
     else
     {
@@ -436,7 +475,7 @@ int AddUserToFile(FILE** file, User *newUser)
   if (!*file)
     return 1;
   printf("Adding user %s \n\n", newUser->name);
-  fwrite(newUser, sizeof(User),1,*file);
+  const size_t catcher = fwrite(newUser, sizeof(User),1,*file);
   return 0;
 }
 
@@ -445,7 +484,7 @@ void UpdateUsersFile(FILE** file, User *newUser, int recPosition)
 {
   fseek(*file, sizeof(User)*recPosition, SEEK_SET);
   printf("Updating account for %s \n\n", newUser->name);
-  fwrite(newUser, sizeof(User),1,*file);
+  const size_t catcher = fwrite(newUser, sizeof(User),1,*file);
 }
 
 int displayAllUsers(FILE** file)
@@ -464,7 +503,7 @@ int displayAllUsers(FILE** file)
 void GetUserAtPosition(FILE **file, int id, User *retrievedUser)
 {
   fseek(*file, sizeof(User)*id, SEEK_SET);
-  fread(retrievedUser, sizeof(User),1,*file);
+  const size_t catcher = fread(retrievedUser, sizeof(User),1,*file);
     printf("User found: %s \n\n", retrievedUser->name);
 }
 
@@ -475,7 +514,7 @@ void fillUserTable(FILE** file, User userTable[], int size)
   for (i = 0; i < size; i++)
   {
     User u;
-    fread(&u, sizeof(User),1, *file);
+    const size_t catcher = fread(&u, sizeof(User),1, *file);
     userTable[i] = u;
   }
 }
@@ -500,7 +539,7 @@ void RewriteUsersFile(FILE** file, User userTable[], int size, User *userToRemov
     }
     else
     {
-      fwrite(&u, sizeof(User),1, *file);
+      const size_t catcher = fwrite(&u, sizeof(User),1, *file);
     }
   }
 }
