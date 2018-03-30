@@ -17,6 +17,13 @@ void login()
 	do
 	{
 		User *nUser = (User*)malloc(sizeof(User));
+		
+		if(NULL == nUser)
+		{
+			//may want better error handling here
+			printf("Error");
+			exit(0);
+		}
 
 		printf("Please enter your username\n");
 		if(!(fgets(nUser->userName, 15, stdin)))

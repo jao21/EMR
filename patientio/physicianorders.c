@@ -14,6 +14,12 @@ void writePhysicianOrder(char *name)
 {
   FILE *orderF;
   PhysicianOrder *orderP = (PhysicianOrder*)malloc(sizeof(PhysicianOrder));
+  
+  	if(NULL == orderP)
+	{
+		printf("Error");
+		exit(0);
+	}
 
   if (OpenFile(&orderF, "orders.dat") == 1)
   {
@@ -23,9 +29,18 @@ void writePhysicianOrder(char *name)
 
   strcpy(orderP->sender, name);
 
-  getchar();
+  if (getchar() == EOF)
+  {
+  	printf("I/O error");
+  	exit(0);
+  }
+  
   printf("\n\nPlease enter the staff's name: ");
-  fgets(orderP->staffName, 55, stdin);
+  if(!(fgets(orderP->staffName, 55, stdin)))
+  {
+	printf("I/O error");
+	exit(0);
+  }
   size_t len = strlen(orderP->staffName);
   if (len && (orderP->staffName[len-1] == '\n'))
   {
@@ -33,7 +48,11 @@ void writePhysicianOrder(char *name)
   }
 
   printf("\nPlease enter the patient's name: ");
-  fgets(orderP->patientName, 55, stdin);
+  if(!(fgets(orderP->patientName, 55, stdin)))
+  {
+	printf("I/O error");
+	exit(0);
+  }
   len = strlen(orderP->patientName);
   if (len && (orderP->patientName[len-1] == '\n'))
   {
@@ -41,21 +60,41 @@ void writePhysicianOrder(char *name)
   }
 
   printf("\nPlease enter the medications needed: ");
-  fgets(orderP->medications, 300, stdin);
+  if(!(fgets(orderP->medications, 300, stdin)))
+  {
+  	printf("I/O error");
+  	exit(0); 	
+  }
 
   printf("\nPlease enter the prodedure to be performed: ");
-  fgets(orderP->procedures, 500, stdin);
-
+  if(!(fgets(orderP->procedures, 500, stdin)))
+  {
+  	printf("I/O error");
+  	exit(0); 	
+  }
   printf("\nPlease enter the operational sequence: ");
-  fgets(orderP->sequence, 600, stdin);
+  if(!(fgets(orderP->sequence, 600, stdin)))
+  {
+  	printf("I/O error");
+  	exit(0); 	
+  }  
 
   printf("\nPlease enter the any kind of feedback to look out for: ");
-  fgets(orderP->feedback, 300, stdin);
+  if(!(fgets(orderP->feedback, 300, stdin)))
+  {
+  	printf("I/O error");
+  	exit(0); 	
+  }
 
   printf("\n\nDo you wish to make the write the order to %s for %s? (y/n)\n", orderP->staffName, orderP->patientName);
 
   char choice;
-  scanf(" %c", &choice);
+  if(!(scanf(" %c", &choice)))
+  {
+  	printf("I/O error");
+  	exit(0); 	
+  }
+  
   if (choice == 'Y' || choice == 'y')
   {
     fclose(orderF);
@@ -66,20 +105,37 @@ void writePhysicianOrder(char *name)
       exit(0);
     }
     printf("Writing order to %s \n\n", orderP->staffName);
-    fwrite(orderP, sizeof(PhysicianOrder),1,orderF);
+    if(!(fwrite(orderP, sizeof(PhysicianOrder),1,orderF)))
+  	{
+  	  printf("I/O error");
+  	  exit(0); 	
+    }  
   }
   else
   {
     printf("\nOrder not written\n\n");
   }
   fclose(orderF);
+  
+    if(NULL == orderP)
+	{
+		printf("Error");
+		exit(0);
+	}
+	
   free(orderP);
 }
 
-void updatePhysicianOrder(char *name)
+void updatePhysicianOrder(const char *name)
 {
   FILE *orderF;
   PhysicianOrder *orderP = (PhysicianOrder*)malloc(sizeof(PhysicianOrder));
+  
+    if(NULL == orderP)
+	{
+		printf("Error");
+		exit(0);
+	}
 
   if (OpenFile(&orderF, "orders.dat") == 1)
   {
@@ -89,13 +145,17 @@ void updatePhysicianOrder(char *name)
 
   printf("Please enter the ID of the order to update \n\n");
 
-  int orderCount = displayOrders(&orderF);
+  const int orderCount = displayOrders(&orderF);
 
   printf("\n\n");
   char choice;
-  scanf(" %c", &choice);
+  if(!(scanf(" %c", &choice)))
+  {
+  	printf("I/O error");
+  	exit(0); 	
+  }  
 
-  int id = (choice - '0')-1;
+  const int id = (choice - '0')-1;
 
   if (id > -1 && id < orderCount)
   {
@@ -108,7 +168,12 @@ void updatePhysicianOrder(char *name)
     free(orderP);
     return;
   }
-    getchar();
+  
+  if (getchar() == EOF)
+  {
+  	printf("error");
+  	exit(0);
+  }
     printf("What do you wish to edit? \n");
     printf("1. Staff's Name \n");
     printf("2. Patient's Name \n");
@@ -117,65 +182,111 @@ void updatePhysicianOrder(char *name)
     printf("5. Sequence of Operations \n");
     printf("6. Feedback to note \n\n");
 
-    scanf(" %c", &choice);
+    if(!(scanf(" %c", &choice)))
+  	{
+  	  printf("I/O error");
+  	  exit(0); 	
+  	}  
 
-    getchar();
+  	if (getchar() == EOF)
+  	{
+  	  printf("error");
+  	  exit(0);
+  	}
+  	
     if (choice == '1')
     {
       char newName[55];
       printf("\n\nStaff's Name: ");
-      size_t len = strlen(orderP->staffName);
+      const size_t len = strlen(orderP->staffName);
       if (len && (orderP->staffName[len-1] == '\n'))
       {
         orderP->staffName[len-1] = '\0';
       }
-      fgets (newName, 55, stdin);
+      
+      if(!(fgets (newName, 55, stdin)))
+  	  {
+  	    printf("I/O error");
+  	    exit(0); 	
+  	  } 
+		 
       strcpy(orderP->staffName, newName);
     }
     else if (choice == '2')
     {
       char newName[55];
       printf("\n\nPatient's Name: ");
-      size_t len = strlen(orderP->patientName);
+      const size_t len = strlen(orderP->patientName);
       if (len && (orderP->patientName[len-1] == '\n'))
       {
         orderP->patientName[len-1] = '\0';
       }
-      fgets (newName, 55, stdin);
+      if(!(fgets (newName, 55, stdin)))
+  	  {
+  	    printf("I/O error");
+  	    exit(0); 	
+  	  }  
+  	  
       strcpy(orderP->patientName, newName);
     }
     else if (choice == '3')
     {
       char newMeds[300];
       printf("\n\nMedications: ");
-      fgets (newMeds, 300, stdin);
+      if(!(fgets (newMeds, 300, stdin)))
+  	  {
+  	    printf("I/O error");
+  	    exit(0); 	
+  	  }  
+  	  
       strcpy(orderP->medications, newMeds);
     }
     else if (choice == '4')
     {
       char newProceds[500];
       printf("\n\nProcedures: ");
-      fgets (newProceds, 500, stdin);
+      if(!(fgets (newProceds, 500, stdin)))
+  	  {
+  	    printf("I/O error");
+  	    exit(0); 	
+  	  }  
       strcpy(orderP->procedures, newProceds);
     }
     else if (choice == '5')
     {
       char newSequence[600];
       printf("\n\nSequence of Operations: ");
-      fgets (newSequence, 600, stdin);
+      if(!(fgets (newSequence, 600, stdin)))
+  	  {
+  	    printf("I/O error");
+  	    exit(0); 	
+  	  }
+		  
       strcpy(orderP->sequence, newSequence);
     }
     else if (choice == '6')
     {
       char newFeedback[300];
       printf("\n\nFeedback to note: ");
-      fgets (newFeedback, 300, stdin);
+      if(!(fgets (newFeedback, 300, stdin)))
+  	  {
+  	    printf("I/O error");
+  	    exit(0); 	
+  	  }
+		  
       strcpy(orderP->feedback, newFeedback);
     }
     else
     {
       printf("Invalid field.");
       fclose(orderF);
+      
+      if(NULL == orderP)
+	  {
+		printf("Error");
+		exit(0);
+	  }
+      
       free(orderP);
       return;
     }
@@ -190,6 +301,12 @@ void viewPhysicianOrder(char *name)
 {
   FILE *orderF;
   PhysicianOrder *orderP = (PhysicianOrder*)malloc(sizeof(PhysicianOrder));
+  
+    if(NULL == orderP)
+	{
+		printf("Error");
+		exit(0);
+	}
 
   if (OpenFile(&orderF, "orders.dat") == 1)
   {
@@ -200,13 +317,22 @@ void viewPhysicianOrder(char *name)
   printf("1. Sent\n");
   printf("2. Received \n\n");
   char choice;
-  scanf(" %c", &choice);
+  
+  if(!(scanf(" %c", &choice)))
+  {
+  	printf("I/O error");
+    exit(0); 	
+  }
 
   if (choice == '1')
   {
     while(!feof(orderF))
     {
-      fread(orderP, sizeof(PhysicianOrder),1, orderF);
+      if(fread(orderP, sizeof(PhysicianOrder),1, orderF) > 1)
+  	  {
+  		printf("I/O error");
+    	exit(0); 	
+      }
       if(strcmp(orderP->sender, name) == 0)
       {
         printf("Staff's name: %s\n", orderP->staffName);
@@ -223,7 +349,11 @@ void viewPhysicianOrder(char *name)
   {
     while(!feof(orderF))
     {
-      fread(orderP, sizeof(PhysicianOrder),1, orderF);
+      if(fread(orderP, sizeof(PhysicianOrder),1, orderF) > 1)
+  	  {
+  		printf("I/O error");
+    	exit(0); 	
+      }
       if(strcmp(orderP->staffName, name) == 0)
       {
         printf("Sender: %s\n", orderP->sender);
@@ -247,9 +377,13 @@ void viewPhysicianOrder(char *name)
 /* display all names and return the number of records */
 int displayOrders(FILE** file)
 {
-  PhysicianOrder p;
+  PhysicianOrder p; 
   int id = 0;
-  fseek(*file, 0, SEEK_SET);
+  if(fseek(*file, 0, SEEK_SET) != 0)
+  {
+  	
+  }
+  
   while(fread(&p, sizeof(PhysicianOrder),1, *file))
   {
     id++;
@@ -260,14 +394,28 @@ int displayOrders(FILE** file)
 
 void GetOrderAtPosition(FILE **file, int id, PhysicianOrder *retrievedOrder)
 {
-  fseek(*file, sizeof(PhysicianOrder)*id, SEEK_SET);
-  fread(retrievedOrder, sizeof(PhysicianOrder),1,*file);
+  if(fseek(*file, sizeof(PhysicianOrder)*id, SEEK_SET) != 0)
+  {
+  	
+  }
+  if(fread(retrievedOrder, sizeof(PhysicianOrder),1,*file) > 1)
+  {
+  	printf("I/O error");
+    exit(0); 	
+  }
+  
   printf("Order to %s for %s found \n\n", retrievedOrder->staffName, retrievedOrder->patientName);
 }
 
 void UpdateOrdersFile(FILE** file, PhysicianOrder *newOrder, int recPosition)
 {
-  fseek(*file, sizeof(PhysicianOrder)*recPosition, SEEK_SET);
+  if(fseek(*file, sizeof(PhysicianOrder)*recPosition, SEEK_SET) != 0)
+  {
+  	
+  }
   printf("Updating order to %s for %s \n\n", newOrder->staffName, newOrder->patientName);
-  fwrite(newOrder, sizeof(PhysicianOrder),1,*file);
+  if(fwrite(newOrder, sizeof(PhysicianOrder),1,*file) != 1)
+  {
+  	
+  }
 }

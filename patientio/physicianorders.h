@@ -16,7 +16,7 @@ typedef struct physOrd
 /* Menu option to write a physician order */
 void writePhysicianOrder(char *name);
 /* Menu option to update an existing physician order */
-void updatePhysicianOrder(char *name);
+void updatePhysicianOrder(const char *name);
 /* Menu option to view a physican order addressed to doctor logged in */
 void viewPhysicianOrder(char *name);
 

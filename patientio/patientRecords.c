@@ -57,6 +57,13 @@ void addPatientInfo(char *type, User *currentUser)
   FILE *vitalF;
 
   Patient *patientP = (Patient*)malloc(sizeof(Patient));
+  
+    if(NULL == patientP)
+	{
+		printf("Error");
+		exit(0);
+	}
+  
   History *historyP;
   EPrescription *presP;
   Vitals *vitalP;
@@ -64,7 +71,7 @@ void addPatientInfo(char *type, User *currentUser)
   getchar();
   printf("Please enter the patient's name: ");
   fgets(patientP->name, 55, stdin);
-  size_t len = strlen(patientP->name);
+  const size_t len = strlen(patientP->name);
   if (len && (patientP->name[len-1] == '\n'))
   {
     patientP->name[len-1] = '\0';
@@ -83,6 +90,13 @@ void addPatientInfo(char *type, User *currentUser)
   if (strncmp(type, "History", 4) == 0)
   {
     historyP = (History*)malloc(sizeof(History));
+    
+    if(NULL == historyP)
+	{
+		printf("Error");
+		exit(0);
+	}
+    
     if (OpenFile(&historyF, "history.dat") == 1)
     {
       printf("Unable to open file");
@@ -94,6 +108,13 @@ void addPatientInfo(char *type, User *currentUser)
   if (strncmp(type, "E-Prescriptions", 4) == 0)
   {
     presP = (EPrescription*)malloc(sizeof(EPrescription));
+    
+    if(NULL == presP)
+	{
+		printf("Error");
+		exit(0);
+	}
+    
     if (OpenFile(&presF, "pres.dat") == 1)
     {
       printf("Unable to open file");
@@ -105,6 +126,13 @@ void addPatientInfo(char *type, User *currentUser)
   if (strncmp(type, "Vitals", 4) == 0)
   {
     vitalP = (Vitals*)malloc(sizeof(Vitals));
+    
+	if(NULL == vitalP)
+	{
+		printf("Error");
+		exit(0);
+	}
+    
     if (OpenFile(&vitalF, "vital.dat") == 1)
     {
       printf("Unable to open file");
@@ -115,8 +143,14 @@ void addPatientInfo(char *type, User *currentUser)
   }
 
   Patient *ePatient = (Patient*)malloc(sizeof(Patient));
+  
+    if(NULL == ePatient)
+	{
+		printf("Error");
+		exit(0);
+	}
 
-  int updatePatient = LookUpGeneralInfo(&patientF, patientP, ePatient);
+  const int updatePatient = LookUpGeneralInfo(&patientF, patientP, ePatient);
 
   if (strncmp(type, "General", 4) != 0 && updatePatient == 0)
   {
@@ -126,20 +160,24 @@ void addPatientInfo(char *type, User *currentUser)
     if (strncmp(type, "History", 4) == 0)
     {
       free(historyP);
+      historyP = NULL;
       fclose(historyF);
     }
     if (strncmp(type, "E-Prescriptions", 4) == 0)
     {
       free(presP);
+      presP = NULL;
       fclose(presF);
     }
     if (strncmp(type, "Vitals", 4) == 0)
     {
       free(vitalP);
+      vitalP = NULL;
       fclose(vitalF);
     }
     fclose(patientF);
     free(ePatient);
+    ePatient = NULL;
     free(patientP);
     return;
   }
@@ -152,33 +190,61 @@ void addPatientInfo(char *type, User *currentUser)
     if (strncmp(type, "History", 4) == 0)
     {
       History *eHistory = (History*)malloc(sizeof(History));
-      int updateHistory = LookUpHistory(&historyF, historyP, eHistory);
+      
+    if(NULL == eHistory)
+	{
+		printf("Error");
+		exit(0);
+	}
+      
+      const int updateHistory = LookUpHistory(&historyF, historyP, eHistory);
       UpdateHistory(updateHistory, &historyF, historyP, eHistory);
       fclose(historyF);
       free(eHistory);
+      eHistory = NULL;
       free(historyP);
+      historyP = NULL;
     }
     if (strncmp(type, "E-Prescriptions", 4) == 0)
     {
       EPrescription *ePres = (EPrescription*)malloc(sizeof(EPrescription));
-      int updatePres = LookUpPres(&presF, presP, ePres);
+      
+      if(NULL == ePres)
+	  {
+		printf("Error");
+		exit(0);
+	  }
+      
+      const int updatePres = LookUpPres(&presF, presP, ePres);
       UpdatePres(updatePres, &presF, presP, ePres);
       fclose(presF);
       free(ePres);
+      ePres = NULL;
       free(presP);
+      presP = NULL;
     }
     if (strncmp(type, "Vitals", 4) == 0)
     {
       Vitals *eVital = (Vitals*)malloc(sizeof(Vitals));
-      int updateVitals = LookUpVitals(&vitalF, vitalP, eVital);
+      
+    if(NULL == eVital)
+	{
+		printf("Error");
+		exit(0);
+	}
+      
+      const int updateVitals = LookUpVitals(&vitalF, vitalP, eVital);
       UpdateVitals(updateVitals, &vitalF, vitalP, eVital);
       fclose(vitalF);
       free(eVital);
+      eVital = NULL;
       free(vitalP);
+      vitalP = NULL;
     }
   }
   fclose(patientF);
   free(ePatient);
+  ePatient = NULL;
   free(patientP);
 }
 
@@ -199,6 +265,13 @@ void updatePatientInfo(char *type, User *currentUser)
   if (strncmp(type, "General", 4) == 0)
   {
     patientP = (Patient*)malloc(sizeof(Patient));
+    
+    if(NULL == patientP)
+	{
+		printf("Error");
+		exit(0);
+	}
+    
     if (OpenFile(&patientF, "patients.dat") == 1)
     {
       printf("Unable to open file");
@@ -209,6 +282,13 @@ void updatePatientInfo(char *type, User *currentUser)
   if (strncmp(type, "History", 4) == 0)
   {
     historyP = (History*)malloc(sizeof(History));
+    
+    if(NULL == historyP)
+	{
+		printf("Error");
+		exit(0);
+	}
+    
     if (OpenFile(&historyF, "history.dat") == 1)
     {
       printf("Unable to open file");
@@ -219,6 +299,13 @@ void updatePatientInfo(char *type, User *currentUser)
   if (strncmp(type, "E-Prescriptions", 4) == 0)
   {
     presP = (EPrescription*)malloc(sizeof(EPrescription));
+    
+    if(NULL == presP)
+	{
+		printf("Error");
+		exit(0);
+	}
+    
     if (OpenFile(&presF, "pres.dat") == 1)
     {
       printf("Unable to open file");
@@ -229,6 +316,13 @@ void updatePatientInfo(char *type, User *currentUser)
   if (strncmp(type, "Vitals", 4) == 0)
   {
     vitalP = (Vitals*)malloc(sizeof(Vitals));
+    
+    if(NULL == vitalP)
+	{
+		printf("Error");
+		exit(0);
+	}
+    
     if (OpenFile(&vitalF, "vital.dat") == 1)
     {
       printf("Unable to open file");
@@ -241,7 +335,7 @@ void updatePatientInfo(char *type, User *currentUser)
   char choice;
   scanf(" %c", &choice);
 
-  int id = (choice - '0')-1;
+  const int id = (choice - '0')-1;
   if (id > -1 && id < patientCount)
   {
     if (strncmp(type, "General", 4) == 0)
@@ -268,16 +362,19 @@ void updatePatientInfo(char *type, User *currentUser)
     {
       fclose(patientF);
       free(patientP);
+      patientP = NULL;
     }
     if (strncmp(type, "History", 4) == 0)
     {
       fclose(historyF);
       free(historyP);
+      historyP = NULL;
     }
     if (strncmp(type, "E-Prescriptions", 4) == 0)
     {
       fclose(presF);
       free(presP);
+      presP = NULL;
     }
     if (strncmp(type, "Vitals", 4) == 0)
     {
@@ -335,7 +432,7 @@ void updatePatientInfo(char *type, User *currentUser)
       char newName[55];
       printf("\n\nNew Name: ");
       fgets (newName, 55, stdin);
-      size_t len = strlen(patientP->name);
+      const size_t len = strlen(patientP->name);
       if (len && (patientP->name[len-1] == '\n'))
       {
         patientP->name[len-1] = '\0';
@@ -576,21 +673,25 @@ void updatePatientInfo(char *type, User *currentUser)
   {
     fclose(patientF);
     free(patientP);
+    patientP = NULL;
   }
   if (strncmp(type, "History", 4) == 0)
   {
     fclose(historyF);
     free(historyP);
+    historyP = NULL;
   }
   if (strncmp(type, "E-Prescriptions", 4) == 0)
   {
     fclose(presF);
     free(presP);
+    presP = NULL;
   }
   if (strncmp(type, "Vitals", 4) == 0)
   {
     fclose(vitalF);
     free(vitalP);
+    vitalP = NULL;
   }
 }
 
@@ -599,6 +700,13 @@ void removePatientInfo()
   FILE *patientF;
   Patient patientTable[MAX_PATIENTS];
   Patient *patientP = (Patient*)malloc(sizeof(Patient));
+  
+    if(NULL == patientP)
+	{
+		printf("Error");
+		exit(0);
+	}
+  
 
   if (OpenFile(&patientF, "patients.dat") == 1)
   {
@@ -608,14 +716,14 @@ void removePatientInfo()
 
   printf("Please enter the ID for the patient to remove \n\n");
 
-  int patientCount = displayAllPatients("General", &patientF);
+  const int patientCount = displayAllPatients("General", &patientF);
   fillPatientTable(&patientF, patientTable, patientCount);
 
   printf("\n\n");
   char choice;
   scanf(" %c", &choice);
 
-  int id = (choice - '0')-1;
+  const int id = (choice - '0')-1;
 
   if (id > -1 && id < patientCount)
   {
@@ -658,6 +766,13 @@ void viewPatientInfoDoc(char *type)
   printf("Please enter the name of the patient to view \n\n");
 
   patientP = (Patient*)malloc(sizeof(Patient));
+  
+    if(NULL == patientP)
+	{
+		printf("Error");
+		exit(0);
+	}
+  
   if (OpenFile(&patientF, "patients.dat") == 1)
   {
     printf("Unable to open file");
@@ -668,7 +783,7 @@ void viewPatientInfoDoc(char *type)
     getchar();
     char name[55];
     fgets(name,55,stdin);
-    size_t len = strlen(name);
+    const size_t len = strlen(name);
     if (len && (name[len-1] == '\n'))
     {
       name[len-1] = '\0';
@@ -676,6 +791,7 @@ void viewPatientInfoDoc(char *type)
 
     fclose(patientF);
     free(patientP);
+    patientP = NULL;
     viewPatientInfoPat(type, name);
   }
   printf("\n\n");
@@ -697,6 +813,13 @@ void viewPatientInfoPat(char *type, char *name)
   if (strncmp(type, "General", 4) == 0 || strncmp(type, "All", 3) == 0)
   {
     patientP = (Patient*)malloc(sizeof(Patient));
+    
+    if(NULL == patientP)
+	{
+		printf("Error");
+		exit(0);
+	}
+    
     if (OpenFile(&patientF, "patients.dat") == 1)
     {
       printf("Unable to open file");
@@ -720,6 +843,13 @@ void viewPatientInfoPat(char *type, char *name)
   if (strncmp(type, "History", 4) == 0 || strncmp(type, "All", 3) == 0)
   {
     historyP = (History*)malloc(sizeof(History));
+    
+    if(NULL == historyP)
+	{
+		printf("Error");
+		exit(0);
+	}
+    
     if (OpenFile(&historyF, "history.dat") == 1)
     {
       printf("Unable to open file");
@@ -750,6 +880,13 @@ void viewPatientInfoPat(char *type, char *name)
   if (strncmp(type, "E-Prescriptions", 4) == 0 || strncmp(type, "All", 3) == 0)
   {
     presP = (EPrescription*)malloc(sizeof(EPrescription));
+    
+    if(NULL == presP)
+	{
+		printf("Error");
+		exit(0);
+	}
+    
     if (OpenFile(&presF, "pres.dat") == 1)
     {
       printf("Unable to open file");
@@ -773,6 +910,13 @@ void viewPatientInfoPat(char *type, char *name)
   if (strncmp(type, "Vitals", 4) == 0 || strncmp(type, "All", 3) == 0)
   {
     vitalP = (Vitals*)malloc(sizeof(Vitals));
+    
+    if(NULL == vitalP)
+	{
+		printf("Error");
+		exit(0);
+	}
+    
     if (OpenFile(&vitalF, "vital.dat") == 1)
     {
       printf("Unable to open file");
@@ -798,21 +942,25 @@ void viewPatientInfoPat(char *type, char *name)
   {
     fclose(patientF);
     free(patientP);
+    patientP = NULL;
   }
   if (strncmp(type, "History", 4) == 0 || strncmp(type, "All", 3) == 0)
   {
     fclose(historyF);
     free(historyP);
+    historyP = NULL;
   }
   if (strncmp(type, "E-Prescriptions", 4) == 0 || strncmp(type, "All", 3) == 0)
   {
     fclose(presF);
     free(presP);
+    presP = NULL;
   }
   if (strncmp(type, "Vitals", 4) == 0 || strncmp(type, "All", 3) == 0)
   {
     fclose(vitalF);
     free(vitalP);
+    vitalP = NULL;
   }
 }
 
@@ -979,7 +1127,7 @@ int LookUpVitals(FILE** file, Vitals *vitalsToLookUp, Vitals *existingVitals)
 /* Determines whether to update existing info or add new patient */
 void UpdateGeneralInfo(int updatePatient, FILE** file, Patient *newPatient, Patient *existingPatient)
 {
-  char choice = ' ';
+  unsigned char choice = ' ';
   /* add new patient? */
   if (updatePatient == 0)
   {
@@ -1026,7 +1174,7 @@ void UpdateGeneralInfo(int updatePatient, FILE** file, Patient *newPatient, Pati
 
 void UpdateHistory(int updateHistory, FILE** file, History *newHistory, History *existingHistory)
 {
-  char choice = ' ';
+  unsigned char choice = ' ';
   /* add new patient? */
   if (updateHistory == 0)
   {
@@ -1086,7 +1234,7 @@ void UpdateHistory(int updateHistory, FILE** file, History *newHistory, History 
 
 void UpdatePres(int updatePres, FILE** file, EPrescription *newPres, EPrescription *existingPres)
 {
-  char choice = ' ';
+  unsigned char choice = ' ';
   /* add new patient? */
   if (updatePres == 0)
   {
@@ -1343,6 +1491,13 @@ void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE 
   History *hist, EPrescription *pres, Vitals *vital)
 {
   hist = (History*)malloc(sizeof(History));
+  
+    if(NULL == hist)
+	{
+		printf("Error");
+		exit(0);
+	}
+  
   if (OpenFile(hFile, "history.dat") == 1)
   {
     printf("Unable to open file");
@@ -1350,6 +1505,13 @@ void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE 
   }
 
   pres = (EPrescription*)malloc(sizeof(EPrescription));
+  
+    if(NULL == pres)
+	{
+		printf("Error");
+		exit(0);
+	}
+  
   if (OpenFile(prFile, "pres.dat") == 1)
   {
     printf("Unable to open file");
@@ -1357,6 +1519,13 @@ void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE 
   }
 
   vital = (Vitals*)malloc(sizeof(Vitals));
+  
+    if(NULL == vital)
+	{
+		printf("Error");
+		exit(0);
+	}
+  
   if (OpenFile(vFile, "vital.dat") == 1)
   {
     printf("Unable to open file");
@@ -1404,12 +1573,15 @@ void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE 
   }
   fclose(*hFile);
   free(hist);
+  hist = NULL;
 
   fclose(*prFile);
   free(pres);
+  pres = NULL;
 
   fclose(*vFile);
   free(vital);
+  vital = NULL;
 }
 
 void RewritePatientsFile(FILE** file, Patient patientTable[], int size, Patient *patientToRemove)

@@ -11,6 +11,8 @@
 #include "patientRecords.h"
 #include "physicianorders.h"
 
+#define BUFFERSIZE 10
+
 void patientRec(User *userLoggedIn);
 void patientMedChart(User *userLoggedIn);
 void patientMedHist(User *userLoggedIn);
@@ -27,7 +29,7 @@ void viewPatientInfoDoc(char *type);
 void viewPatientInfoPat(char *type, char *name);
 
 void writePhysicianOrder(char *name);
-void updatePhysicianOrder(char *name);
+void updatePhysicianOrder(const char *name);
 void viewPhysicianOrder(char *name);
 
 void addUserAccount();
@@ -41,14 +43,17 @@ void adminMenu (User *userLoggedIn) //First menu for Admin
     char choice;
     do
     {
-      int inc = 0;
+    //  int inc = 0;
 
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Patient Records");
       printf ("\n2: User Accounts");
       printf ("\nPress q to logout");
       printf ("\n\nOption: ");
-      scanf(" %c", &choice);
+      if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      {
+    	choice = choice;
+	  }
 
       switch(choice)
 	    {
@@ -72,7 +77,7 @@ void doctorMenu (User *userLoggedIn) //First menu for Doctor
     char choice;
     do
     {
-      int inc = 0;
+    //  int inc = 0;
 
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Patient Medical Chart");
@@ -83,7 +88,11 @@ void doctorMenu (User *userLoggedIn) //First menu for Doctor
       printf ("\n6: Patient Records");
       printf ("\nPress q to logout");
       printf ("\n\nOption: ");
-      scanf(" %c", &choice);
+      if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      {
+    	choice = choice;
+	  }
+
 
       switch(choice)
 	    {
@@ -119,7 +128,7 @@ void patientMenu (User *userLoggedIn) //First Menu for Nurse
     char choice;
     do
     {
-      int inc = 0;
+    //  int inc = 0;
 
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Patient Medical History");
@@ -128,7 +137,11 @@ void patientMenu (User *userLoggedIn) //First Menu for Nurse
       printf ("\n4: General Info");
       printf ("\nPress q to logout");
       printf ("\n\nOption: ");
-      scanf(" %c", &choice);
+      if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      {
+    	choice = choice;
+	  }
+
 
       switch(choice)
 	    {
@@ -159,13 +172,17 @@ void auditorMenu (User *userLoggedIn) //First menu for Auditor
     char choice;
     do
     {
-      int inc = 0;
+   //   int inc = 0;
 
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Logs");
       printf ("\nPress q to logout");
       printf ("\n\nOption: ");
-      scanf(" %c", &choice);
+      if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      {
+    	choice = choice;
+	  }
+
 
       switch(choice)
 	    {
@@ -192,7 +209,11 @@ void patientMedChart(User *userLoggedIn) //This menu displays actions that can b
         printf("Selected -> Medical Charts \n");
         printf("1. View \n");
         printf("Press q or Q to exit \n\n");
-        scanf(" %c", &choice);
+      if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      {
+    	choice = choice;
+	  }
+
 
         if (choice == '1')
         {
@@ -228,7 +249,11 @@ void patientMedHist(User *userLoggedIn) //This menu displays actions that can be
         printf("2. Add \n");
         printf("3. Update \n");
         printf("Press q or Q to exit \n\n");
-        scanf(" %c", &choice);
+      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      	{
+    		choice = choice;
+	  	}
+
 
         if (choice == '1')
         {
@@ -273,7 +298,11 @@ void ePrescript(User *userLoggedIn) //This menu displays actions that can be per
         printf("2. Add \n");
         printf("3. Update \n");
         printf("Press q or Q to exit \n\n");
-        scanf(" %c", &choice);
+      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      	{
+    		choice = choice;
+	  	}
+
 
         if (choice == '1')
         {
@@ -317,7 +346,11 @@ void vital(User *userLoggedIn) //This menu displays actions that can be performe
         printf("2. Add \n");
         printf("3. Update \n");
         printf("Press q or Q to exit \n\n");
-        scanf(" %c", &choice);
+      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      	{
+    		choice = choice;
+	  	}
+
 
         if (choice == '1')
         {
@@ -369,7 +402,11 @@ void physicianOrder(User *userLoggedIn) //This menu displays actions that can be
         printf("2. Write \n");
         printf("3. Update \n");
         printf("Press q or Q to exit \n\n");
-        scanf(" %c", &choice);
+      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      	{
+    		choice = choice;
+	  	}
+
 
         if (choice == '1')
         {
@@ -409,7 +446,11 @@ void patientRec(User *userLoggedIn) //This menu displays actions that can be dis
         printf("2. Update \n");
         printf("3. Remove \n");
         printf("Press q or Q to exit \n\n");
-        scanf(" %c", &choice);
+     	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      	{
+    		choice = choice;
+	 	}
+
 
         if (choice == '1')
         {
@@ -444,7 +485,11 @@ void patientRec(User *userLoggedIn) //This menu displays actions that can be dis
         printf("2. Add \n");
         printf("3. Update \n");
         printf("Press q or Q to exit \n\n");
-        scanf(" %c", &choice);
+      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      	{
+    		choice = choice;
+	  	}
+
 
         if (choice == '1')
         {
@@ -485,7 +530,11 @@ void userAcc(User *userLoggedIn) //This menu displays actions that can be displa
         printf("3. Update \n");
         printf("4. Remove \n");
         printf("Press q or Q to exit \n\n");
-        scanf(" %c", &choice);
+      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      	{
+    		choice = choice;
+	  	}
+
 
         if (choice == '1')
         {
