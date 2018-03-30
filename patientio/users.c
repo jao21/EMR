@@ -81,7 +81,7 @@ void updateUserAccount()
 
   printf("\n\n");
   char choice;
-  scanf(" %c", &choice);
+  const int catcherS1 = scanf(" %c", &choice);
 
   const int id = (choice - '0')-1;
 
@@ -108,21 +108,21 @@ void updateUserAccount()
     }
     printf("\n");
 
-    scanf(" %c", &choice);
+    const int catcherS = scanf(" %c", &choice);
 
-    getchar();
+    const int aCatcher = getchar();
     if (choice == '1')
     {
       char newName[55];
       printf("\n\nNew Name: ");
-      fgets (newName, 55, stdin);
+      const char* intCatcher5 = fgets (newName, 55, stdin);
       strcpy(userP->name, newName);
     }
     else if (choice == '2')
     {
       char newUsername[15];
       printf("\n\nNew Username: ");
-      fgets (newUsername, 15, stdin);
+      const char* intCatcher4 = fgets (newUsername, 15, stdin);
 
       strcpy(userP->userName, newUsername);
     }
@@ -130,7 +130,7 @@ void updateUserAccount()
     {
       char newPassword[15];
       printf("\n\nNew Password: ");
-      fgets (newPassword, 15, stdin);
+      const char* intCatcher3 = fgets (newPassword, 15, stdin);
 
       strcpy(userP->password, newPassword);
     }
@@ -138,20 +138,20 @@ void updateUserAccount()
     {
       char newRole[8];
       printf("\n\nNew Role: ");
-      fgets (newRole, 8, stdin);
+      const char* intCatcher2 = fgets (newRole, 8, stdin);
       strcpy(userP->role, newRole);
 
       if((strcmp(userP->role, "Doctor") == 0) || (strcmp(userP->role, "doctor") == 0))
       {
         printf("Please enter their department: ");
-        fgets(userP->department, 50, stdin);
+        const char* intCatcher1 = fgets(userP->department, 50, stdin);
       }
     }
     else if (choice == '5' && ((strcmp(userP->role, "Doctor") == 0) || (strcmp(userP->role, "doctor") == 0)))
     {
       char newDepartment[50];
       printf("\n\nNew Department: ");
-      fgets (newDepartment, 50, stdin);
+      const char* intCatcher = fgets (newDepartment, 50, stdin);
       strcpy(userP->department, newDepartment);
     }
     else
@@ -196,7 +196,7 @@ void removeUserAccount()
 
   printf("\n\n");
   char choice;
-  scanf(" %c", &choice);
+  const int catcherS1 = scanf(" %c", &choice);
 
   const int id = (choice - '0')-1;
 
@@ -213,7 +213,7 @@ void removeUserAccount()
   }
 
     printf("Delete %s? (y/n)", userP->name);
-    scanf(" %c", &choice);
+    const int catcherS = scanf(" %c", &choice);
 
     if (choice == 'y' || choice == 'Y')
     {
@@ -255,7 +255,7 @@ void viewUserAccount()
   const int userCount = displayAllUsers(&userF);
   printf("\n\n");
   char choice;
-  scanf(" %c", &choice);
+  const int catcherS = scanf(" %c", &choice);
 
   const int id = (choice - '0')-1;
 
@@ -337,9 +337,9 @@ int compareAccounts(User *userToCompare)
 void CreateUserInfo(User *newUser)
 {
   char role[8];
-  getchar();
+  const int aCatcher = getchar();
   printf("Please enter the user's name: ");
-  fgets(newUser->name, 55, stdin);
+  const char* intCatcher = fgets(newUser->name, 55, stdin);
   const size_t len = strlen(newUser->name);
   if (len && (newUser->name[len-1] == '\n'))
   {
@@ -450,7 +450,7 @@ void UpdateAccounts(int updateUser, FILE** file, User *newUser, User *existingUs
     printf("\n");
   }
 
-  scanf(" %c", &choice);
+  const int catcherS = scanf(" %c", &choice);
   if (choice == 'Y' || choice == 'y')
   {
     if (updateUser == 0)
@@ -482,7 +482,7 @@ int AddUserToFile(FILE** file, User *newUser)
 /* Update existing patient's record with new values */
 void UpdateUsersFile(FILE** file, User *newUser, int recPosition)
 {
-  fseek(*file, sizeof(User)*recPosition, SEEK_SET);
+  const int catcher1 = fseek(*file, sizeof(User)*recPosition, SEEK_SET);
   printf("Updating account for %s \n\n", newUser->name);
   const size_t catcher = fwrite(newUser, sizeof(User),1,*file);
 }
@@ -491,7 +491,7 @@ int displayAllUsers(FILE** file)
 {
   User u;
   int id = 0;
-  fseek(*file, 0, SEEK_SET);
+  const int catcher1 = fseek(*file, 0, SEEK_SET);
   while(fread(&u, sizeof(User),1, *file))
   {
     id++;
@@ -502,14 +502,14 @@ int displayAllUsers(FILE** file)
 
 void GetUserAtPosition(FILE **file, int id, User *retrievedUser)
 {
-  fseek(*file, sizeof(User)*id, SEEK_SET);
+  const int catcher1 = fseek(*file, sizeof(User)*id, SEEK_SET);
   const size_t catcher = fread(retrievedUser, sizeof(User),1,*file);
     printf("User found: %s \n\n", retrievedUser->name);
 }
 
 void fillUserTable(FILE** file, User userTable[], int size)
 {
-  fseek(*file, 0, SEEK_SET);
+  const int catcher1 = fseek(*file, 0, SEEK_SET);
   int i;
   for (i = 0; i < size; i++)
   {
