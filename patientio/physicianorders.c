@@ -36,11 +36,8 @@ void writePhysicianOrder(char *name)
   }
   
   printf("\n\nPlease enter the staff's name: ");
-  if(!(fgets(orderP->staffName, 55, stdin)))
-  {
-	printf("I/O error");
-	exit(0);
-  }
+  const char* Catcher1 = fgets(orderP->staffName, 55, stdin);
+
   size_t len = strlen(orderP->staffName);
   if (len && (orderP->staffName[len-1] == '\n'))
   {
@@ -48,11 +45,8 @@ void writePhysicianOrder(char *name)
   }
 
   printf("\nPlease enter the patient's name: ");
-  if(!(fgets(orderP->patientName, 55, stdin)))
-  {
-	printf("I/O error");
-	exit(0);
-  }
+  const char* Catcher = fgets(orderP->patientName, 55, stdin);
+
   len = strlen(orderP->patientName);
   if (len && (orderP->patientName[len-1] == '\n'))
   {
@@ -60,40 +54,23 @@ void writePhysicianOrder(char *name)
   }
 
   printf("\nPlease enter the medications needed: ");
-  if(!(fgets(orderP->medications, 300, stdin)))
-  {
-  	printf("I/O error");
-  	exit(0); 	
-  }
+  const char* Catcher2 = fgets(orderP->medications, 300, stdin);
+
 
   printf("\nPlease enter the prodedure to be performed: ");
-  if(!(fgets(orderP->procedures, 500, stdin)))
-  {
-  	printf("I/O error");
-  	exit(0); 	
-  }
+  const char* Catcher3 = fgets(orderP->procedures, 500, stdin);
+
   printf("\nPlease enter the operational sequence: ");
-  if(!(fgets(orderP->sequence, 600, stdin)))
-  {
-  	printf("I/O error");
-  	exit(0); 	
-  }  
+  const char* Catcher4 = fgets(orderP->sequence, 600, stdin);
 
   printf("\nPlease enter the any kind of feedback to look out for: ");
-  if(!(fgets(orderP->feedback, 300, stdin)))
-  {
-  	printf("I/O error");
-  	exit(0); 	
-  }
+  const char* Catcher5 = fgets(orderP->feedback, 300, stdin);
 
   printf("\n\nDo you wish to make the write the order to %s for %s? (y/n)\n", orderP->staffName, orderP->patientName);
 
   char choice;
-  if(!(scanf(" %c", &choice)))
-  {
-  	printf("I/O error");
-  	exit(0); 	
-  }
+  const int catcherS2 = scanf(" %c", &choice);
+
   
   if (choice == 'Y' || choice == 'y')
   {
@@ -105,11 +82,8 @@ void writePhysicianOrder(char *name)
       exit(0);
     }
     printf("Writing order to %s \n\n", orderP->staffName);
-    if(!(fwrite(orderP, sizeof(PhysicianOrder),1,orderF)))
-  	{
-  	  printf("I/O error");
-  	  exit(0); 	
-    }  
+    const size_t catcherSt = fwrite(orderP, sizeof(PhysicianOrder),1,orderF);
+
   }
   else
   {
@@ -149,11 +123,7 @@ void updatePhysicianOrder(const char *name)
 
   printf("\n\n");
   char choice;
-  if(!(scanf(" %c", &choice)))
-  {
-  	printf("I/O error");
-  	exit(0); 	
-  }  
+  const int catcherS = scanf(" %c", &choice);
 
   const int id = (choice - '0')-1;
 
@@ -182,11 +152,7 @@ void updatePhysicianOrder(const char *name)
     printf("5. Sequence of Operations \n");
     printf("6. Feedback to note \n\n");
 
-    if(!(scanf(" %c", &choice)))
-  	{
-  	  printf("I/O error");
-  	  exit(0); 	
-  	}  
+    const int catcherS1 = scanf(" %c", &choice);
 
   	if (getchar() == EOF)
   	{
@@ -204,11 +170,7 @@ void updatePhysicianOrder(const char *name)
         orderP->staffName[len-1] = '\0';
       }
       
-      if(!(fgets (newName, 55, stdin)))
-  	  {
-  	    printf("I/O error");
-  	    exit(0); 	
-  	  } 
+      const char* Catcher = fgets (newName, 55, stdin);
 		 
       strcpy(orderP->staffName, newName);
     }
@@ -221,11 +183,8 @@ void updatePhysicianOrder(const char *name)
       {
         orderP->patientName[len-1] = '\0';
       }
-      if(!(fgets (newName, 55, stdin)))
-  	  {
-  	    printf("I/O error");
-  	    exit(0); 	
-  	  }  
+      
+      const char* Catcher1 = fgets (newName, 55, stdin); 
   	  
       strcpy(orderP->patientName, newName);
     }
@@ -233,11 +192,7 @@ void updatePhysicianOrder(const char *name)
     {
       char newMeds[300];
       printf("\n\nMedications: ");
-      if(!(fgets (newMeds, 300, stdin)))
-  	  {
-  	    printf("I/O error");
-  	    exit(0); 	
-  	  }  
+      const char* Catcher2 = fgets (newMeds, 300, stdin);
   	  
       strcpy(orderP->medications, newMeds);
     }
@@ -245,22 +200,15 @@ void updatePhysicianOrder(const char *name)
     {
       char newProceds[500];
       printf("\n\nProcedures: ");
-      if(!(fgets (newProceds, 500, stdin)))
-  	  {
-  	    printf("I/O error");
-  	    exit(0); 	
-  	  }  
+      const char* Catcher3 = fgets (newProceds, 500, stdin);
+
       strcpy(orderP->procedures, newProceds);
     }
     else if (choice == '5')
     {
       char newSequence[600];
       printf("\n\nSequence of Operations: ");
-      if(!(fgets (newSequence, 600, stdin)))
-  	  {
-  	    printf("I/O error");
-  	    exit(0); 	
-  	  }
+      const char* Catcher5 = fgets (newSequence, 600, stdin);
 		  
       strcpy(orderP->sequence, newSequence);
     }
@@ -268,11 +216,7 @@ void updatePhysicianOrder(const char *name)
     {
       char newFeedback[300];
       printf("\n\nFeedback to note: ");
-      if(!(fgets (newFeedback, 300, stdin)))
-  	  {
-  	    printf("I/O error");
-  	    exit(0); 	
-  	  }
+      const char* Catcher5 = fgets (newFeedback, 300, stdin);
 		  
       strcpy(orderP->feedback, newFeedback);
     }
@@ -318,11 +262,7 @@ void viewPhysicianOrder(char *name)
   printf("2. Received \n\n");
   char choice;
   
-  if(!(scanf(" %c", &choice)))
-  {
-  	printf("I/O error");
-    exit(0); 	
-  }
+  const int catcherS = scanf(" %c", &choice);
 
   if (choice == '1')
   {
@@ -414,8 +354,5 @@ void UpdateOrdersFile(FILE** file, PhysicianOrder *newOrder, int recPosition)
   	
   }
   printf("Updating order to %s for %s \n\n", newOrder->staffName, newOrder->patientName);
-  if(fwrite(newOrder, sizeof(PhysicianOrder),1,*file) != 1)
-  {
-  	
-  }
+  const size_t catcher = fwrite(newOrder, sizeof(PhysicianOrder),1,*file);
 }
