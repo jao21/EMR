@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <errno.h>
 #include "patientRecords.h"
 #include "fileio.h"
 
@@ -42,7 +43,7 @@ void GetPresAtPosition(FILE **file, int id, EPrescription *retrievedPres);
 void GetVitalsAtPosition(FILE **file, int id, Vitals *retrievedVitals);
 
 void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE **vFile,
-  History *hist, EPrescription *pres, Vitals *vital);
+  History *hist, EPrescription *pres, Vitals *vit);
 
 void fillPatientTable(FILE** file, Patient *patientTable, int size);
 void RewritePatientsFile(FILE** file, Patient *patientTable, int size, Patient *patientToRemove);
@@ -496,16 +497,80 @@ void updatePatientInfo(char *type, User *currentUser)
   {
       if (choice == '1')
       {
+		char buff[25];
+		char *endP;
+		errno = 0;
         int newHeight;
         printf("\n\nNew Height: ");
-        const int catcherS22 = scanf(" %d", &newHeight);
+		if (fgets(buff, sizeof(buff), stdin) == NULL)
+		{
+			if (puts("Error in reading input. Exiting program") == EOF)
+			{
+				exit(0);
+			}
+			newHeight = strtol(buff, &endP, 10);
+
+			if (ERANGE == errno)
+			{
+				if (puts("number out of range\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if (endP == buff)
+			{
+				if (puts("not valid numeric input\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if ('\n' != *endP && '\0' != *endP)
+			{
+				if (puts("extra characters on input line\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+		}
         historyP->height = newHeight;
       }
       else if (choice == '2')
       {
+		char buff[25];
+		char *endP;
+		errno = 0;
         int newWeight;
         printf("\n\nNew Weight: ");
-        const int catcherS17 = scanf(" %d", &newWeight);
+		if (fgets(buff, sizeof(buff), stdin) == NULL)
+		{
+			if (puts("Error in reading input. Exiting program") == EOF)
+			{
+				exit(0);
+			}
+			newWeight = strtol(buff, &endP, 10);
+
+			if (ERANGE == errno)
+			{
+				if (puts("number out of range\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if (endP == buff)
+			{
+				if (puts("not valid numeric input\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if ('\n' != *endP && '\0' != *endP)
+			{
+				if (puts("extra characters on input line\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+		}
         historyP->weight = newWeight;
       }
       else if (choice == '3')
@@ -608,9 +673,41 @@ void updatePatientInfo(char *type, User *currentUser)
       }
       else if (choice == '4')
       {
+		char buff[25];
+		char *endP;
+		errno = 0;
         int newDAW;
         printf("\n\nNew DAW Code: ");
-        const int catcherS4 = scanf(" %d", &newDAW);
+		if (fgets(buff, sizeof(buff), stdin) == NULL)
+		{
+			if (puts("Error in reading input. Exiting program") == EOF)
+			{
+				exit(0);
+			}
+			newDAW = strtol(buff, &endP, 10);
+
+			if (ERANGE == errno)
+			{
+				if (puts("number out of range\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if (endP == buff)
+			{
+				if (puts("not valid numeric input\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if ('\n' != *endP && '\0' != *endP)
+			{
+				if (puts("extra characters on input line\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+		}
         presP->daw = newDAW;
         strcpy(presP->prescriber, currentUser->name);
       }
@@ -632,30 +729,158 @@ void updatePatientInfo(char *type, User *currentUser)
 
       if (choice == '1')
       {
+		char buff[25];
+		char *endP;
+		errno = 0;
         double newTemp;
         printf("\n\nNewest body temperature: ");
-        const int catcherS3 = scanf(" %lf", &newTemp);
+		if (fgets(buff, sizeof(buff), stdin) == NULL)
+		{
+			if (puts("Error in reading input. Exiting program") == EOF)
+			{
+				exit(0);
+			}
+			newTemp = strtod(buff, &endP);
+
+			if (ERANGE == errno)
+			{
+				if (puts("number out of range\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if (endP == buff)
+			{
+				if (puts("not valid numeric input\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if ('\n' != *endP && '\0' != *endP)
+			{
+				if (puts("extra characters on input line\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+		}
         vitalP->lastBodyTemperature = newTemp;
       }
       else if (choice == '2')
       {
+		char buff[25];
+		char *endP;
+		errno = 0;
         int newHeart;
         printf("\n\nNewest Heart Rate: ");
-        const int catcherS2 = scanf(" %d", &newHeart);
+		if (fgets(buff, sizeof(buff), stdin) == NULL)
+		{
+			if (puts("Error in reading input. Exiting program") == EOF)
+			{
+				exit(0);
+			}
+			newHeart = strtol(buff, &endP, 10);
+
+			if (ERANGE == errno)
+			{
+				if (puts("number out of range\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if (endP == buff)
+			{
+				if (puts("not valid numeric input\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if ('\n' != *endP && '\0' != *endP)
+			{
+				if (puts("extra characters on input line\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+		}
         vitalP->lastHeartRate = newHeart;
       }
       else if (choice == '3')
       {
+		char buff[25];
+		char *endP;
+		errno = 0;
         int newResp;
         printf("\n\nNewest Respiratory Rate: ");
-        const int catcherS14 = scanf(" %d", &newResp);
+		if (fgets(buff, sizeof(buff), stdin) == NULL)
+		{
+			if (puts("Error in reading input. Exiting program") == EOF)
+			{
+				exit(0);
+			}
+			newResp = strtol(buff, &endP, 10);
+
+			if (ERANGE == errno)
+			{
+				if (puts("number out of range\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if (endP == buff)
+			{
+				if (puts("not valid numeric input\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if ('\n' != *endP && '\0' != *endP)
+			{
+				if (puts("extra characters on input line\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+		}
         vitalP->lastRespiratoryRate = newResp;
       }
       else if (choice == '4')
       {
+		char buff[25];
+		char *endP;
+		errno = 0;
         int newBlood;
         printf("\n\nNewest Blood Pressure: ");
-        const int catcherS31 = scanf(" %d", &newBlood);
+		if (fgets(buff, sizeof(buff), stdin) == NULL)
+		{
+			if (puts("Error in reading input. Exiting program") == EOF)
+			{
+				exit(0);
+			}
+			newBlood = strtol(buff, &endP, 10);
+
+			if (ERANGE == errno)
+			{
+				if (puts("number out of range\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if (endP == buff)
+			{
+				if (puts("not valid numeric input\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+			else if ('\n' != *endP && '\0' != *endP)
+			{
+				if (puts("extra characters on input line\n") == EOF)
+				{
+					exit(0);
+				}
+			}
+		}
         vitalP->lastBloodPressure = newBlood;
       }
       else
@@ -983,10 +1208,74 @@ void CreatePatientInfo(Patient *newPatient)
 void CreateHistory(History *history1)
 {
   printf("Please enter the patient's height: ");
-  const int catcherS2 = scanf(" %d", &history1->height);
+  char buff1[25];
+  char *endP1;
+  errno = 0;
+  if (fgets(buff1, sizeof(buff1), stdin) == NULL)
+  {
+	  if (puts("Error in reading input. Exiting program") == EOF)
+	  {
+		  exit(0);
+	  }
+	  history1->height = strtol(buff1, &endP1, 10);
+
+	  if (ERANGE == errno)
+	  {
+		  if (puts("number out of range\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if (endP1 == buff1)
+	  {
+		  if (puts("not valid numeric input\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if ('\n' != *endP1 && '\0' != *endP1)
+	  {
+		  if (puts("extra characters on input line\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+  }
 
   printf("Please enter their weight: ");
-  const int catcherS1 = scanf(" %d", &history1->weight);
+  char buff2[25];
+  char *endP2;
+  errno = 0;
+  if (fgets(buff2, sizeof(buff2), stdin) == NULL)
+  {
+	  if (puts("Error in reading input. Exiting program") == EOF)
+	  {
+		  exit(0);
+	  }
+	  history1->weight = strtol(buff2, &endP2, 10);
+
+	  if (ERANGE == errno)
+	  {
+		  if (puts("number out of range\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if (endP2 == buff2)
+	  {
+		  if (puts("not valid numeric input\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if ('\n' != *endP2 && '\0' != *endP2)
+	  {
+		  if (puts("extra characters on input line\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+  }
 
   const int aCatcher = getchar();
   printf("Please enter their chief complaint: ");
@@ -1032,7 +1321,39 @@ void CreatePres(EPrescription *pres, User *currentUser)
   const char* intCatcher = fgets(pres->directions, 600, stdin);
 
   printf("Please enter the DAW Code: ");
-  const int catcherS = scanf(" %d", &pres->daw);
+  char buff[25];
+  char *endP;
+  errno = 0;
+  if (fgets(buff, sizeof(buff), stdin) == NULL)
+  {
+	  if (puts("Error in reading input. Exiting program") == EOF)
+	  {
+		  exit(0);
+	  }
+	  pres->daw = strtol(buff, &endP, 10);
+
+	  if (ERANGE == errno)
+	  {
+		  if (puts("number out of range\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if (endP == buff)
+	  {
+		  if (puts("not valid numeric input\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if ('\n' != *endP && '\0' != *endP)
+	  {
+		  if (puts("extra characters on input line\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+  }
 
   printf("\n");
 }
@@ -1041,22 +1362,150 @@ void CreateVitals(Vitals *vitals1)
 {
   printf("\nPlease enter their latest body temperature: ");
   double newTemp;
-  const int catcherS3 = scanf(" %lf", &newTemp);
+  char buff1[25];
+  char *endP1;
+  errno = 0;
+  if (fgets(buff1, sizeof(buff1), stdin) == NULL)
+  {
+	  if (puts("Error in reading input. Exiting program") == EOF)
+	  {
+		  exit(0);
+	  }
+	  newTemp = strtod(buff1, &endP1);
+
+	  if (ERANGE == errno)
+	  {
+		  if (puts("number out of range\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if (endP1 == buff1)
+	  {
+		  if (puts("not valid numeric input\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if ('\n' != *endP1 && '\0' != *endP1)
+	  {
+		  if (puts("extra characters on input line\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+  }
   vitals1->lastBodyTemperature = newTemp;
 
   printf("\nPlease enter their latest heart rate: ");
   int newHeart;
-  const int catcherS2 = scanf(" %d", &newHeart);
+  char buff2[25];
+  char *endP2;
+  errno = 0;
+  if (fgets(buff2, sizeof(buff2), stdin) == NULL)
+  {
+	  if (puts("Error in reading input. Exiting program") == EOF)
+	  {
+		  exit(0);
+	  }
+	  newHeart = strtol(buff2, &endP2, 10);
+
+	  if (ERANGE == errno)
+	  {
+		  if (puts("number out of range\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if (endP2 == buff2)
+	  {
+		  if (puts("not valid numeric input\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if ('\n' != *endP2 && '\0' != *endP2)
+	  {
+		  if (puts("extra characters on input line\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+  }
   vitals1->lastHeartRate = newHeart;
 
   printf("\nPlease enter their latest respiratory rate: ");
   int newResp;
-  const int catcherS11 = scanf(" %d", &newResp);
+  char buff3[25];
+  char *endP3;
+  errno = 0;
+  if (fgets(buff3, sizeof(buff3), stdin) == NULL)
+  {
+	  if (puts("Error in reading input. Exiting program") == EOF)
+	  {
+		  exit(0);
+	  }
+	  newResp = strtol(buff3, &endP3, 10);
+
+	  if (ERANGE == errno)
+	  {
+		  if (puts("number out of range\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if (endP3 == buff3)
+	  {
+		  if (puts("not valid numeric input\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if ('\n' != *endP3 && '\0' != *endP3)
+	  {
+		  if (puts("extra characters on input line\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+  }
   vitals1->lastRespiratoryRate = newResp;
 
   printf("\nPlease enter their latest blood pressure: ");
   int newBlood;
-  const int catcherS = scanf(" %d", &newBlood);
+  char buff4[25];
+  char *endP4;
+  errno = 0;
+  if (fgets(buff4, sizeof(buff4), stdin) == NULL)
+  {
+	  if (puts("Error in reading input. Exiting program") == EOF)
+	  {
+		  exit(0);
+	  }
+	  newBlood = strtol(buff4, &endP4, 10);
+
+	  if (ERANGE == errno)
+	  {
+		  if (puts("number out of range\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if (endP4 == buff4)
+	  {
+		  if (puts("not valid numeric input\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+	  else if ('\n' != *endP4 && '\0' != *endP4)
+	  {
+		  if (puts("extra characters on input line\n") == EOF)
+		  {
+			  exit(0);
+		  }
+	  }
+  }
   vitals1->lastBloodPressure = newBlood;
 
   printf("\n");
@@ -1488,7 +1937,7 @@ void GetVitalsAtPosition(FILE **file, int id, Vitals *retrievedVitals)
 }
 
 void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE **vFile,
-  History *hist, EPrescription *pres, Vitals *vital)
+  History *hist, EPrescription *pres, Vitals *vit)
 {
   hist = (History*)malloc(sizeof(History));
   
@@ -1518,9 +1967,9 @@ void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE 
     exit(0);
   }
 
-  vital = (Vitals*)malloc(sizeof(Vitals));
+  vit = (Vitals*)malloc(sizeof(Vitals));
   
-    if(NULL == vital)
+    if(NULL == vit)
 	{
 		printf("Error");
 		exit(0);
@@ -1561,13 +2010,13 @@ void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE 
   position = -1;
   while(!feof(*vFile))
   {
-    const size_t catcher2 = fread(vital, sizeof(Vitals),1, *vFile);
+    const size_t catcher2 = fread(vit, sizeof(Vitals),1, *vFile);
     position++;
-    if(strcmp(vital->name, oldName) == 0)
+    if(strcmp(vit->name, oldName) == 0)
     {
-      strcpy(vital->name, newName);
+      strcpy(vit->name, newName);
       const int catcher1 = fseek(*vFile, sizeof(Vitals)*position, SEEK_SET);
-      const size_t catcher = fwrite(vital, sizeof(Vitals),1,*vFile);
+      const size_t catcher = fwrite(vit, sizeof(Vitals),1,*vFile);
       break;
     }
   }
@@ -1580,8 +2029,8 @@ void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE 
   pres = NULL;
 
   fclose(*vFile);
-  free(vital);
-  vital = NULL;
+  free(vit);
+  vit = NULL;
 }
 
 void RewritePatientsFile(FILE** file, Patient patientTable[], int size, Patient *patientToRemove)
