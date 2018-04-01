@@ -58,18 +58,17 @@ void addPatientInfo(char *type, User *currentUser)
   FILE *vitalF;
 
   Patient *patientP = (Patient*)malloc(sizeof(Patient));
-  
-    if(NULL == patientP)
+
+  if(NULL == patientP)
 	{
 		printf("Error");
 		exit(0);
 	}
-  
+
   History *historyP;
   EPrescription *presP;
   Vitals *vitalP;
 
-  const int aCatcher1 = getchar();
   printf("Please enter the patient's name: ");
   const char* intCatcher44 = fgets(patientP->name, 55, stdin);
   const size_t len = strlen(patientP->name);
@@ -91,13 +90,13 @@ void addPatientInfo(char *type, User *currentUser)
   if (strncmp(type, "History", 4) == 0)
   {
     historyP = (History*)malloc(sizeof(History));
-    
+
     if(NULL == historyP)
 	{
 		printf("Error");
 		exit(0);
 	}
-    
+
     if (OpenFile(&historyF, "history.dat") == 1)
     {
       printf("Unable to open file");
@@ -109,13 +108,13 @@ void addPatientInfo(char *type, User *currentUser)
   if (strncmp(type, "E-Prescriptions", 4) == 0)
   {
     presP = (EPrescription*)malloc(sizeof(EPrescription));
-    
+
     if(NULL == presP)
 	{
 		printf("Error");
 		exit(0);
 	}
-    
+
     if (OpenFile(&presF, "pres.dat") == 1)
     {
       printf("Unable to open file");
@@ -127,13 +126,13 @@ void addPatientInfo(char *type, User *currentUser)
   if (strncmp(type, "Vitals", 4) == 0)
   {
     vitalP = (Vitals*)malloc(sizeof(Vitals));
-    
+
 	if(NULL == vitalP)
 	{
 		printf("Error");
 		exit(0);
 	}
-    
+
     if (OpenFile(&vitalF, "vital.dat") == 1)
     {
       printf("Unable to open file");
@@ -144,7 +143,7 @@ void addPatientInfo(char *type, User *currentUser)
   }
 
   Patient *ePatient = (Patient*)malloc(sizeof(Patient));
-  
+
     if(NULL == ePatient)
 	{
 		printf("Error");
@@ -191,13 +190,13 @@ void addPatientInfo(char *type, User *currentUser)
     if (strncmp(type, "History", 4) == 0)
     {
       History *eHistory = (History*)malloc(sizeof(History));
-      
+
     if(NULL == eHistory)
 	{
 		printf("Error");
 		exit(0);
 	}
-      
+
       const int updateHistory = LookUpHistory(&historyF, historyP, eHistory);
       UpdateHistory(updateHistory, &historyF, historyP, eHistory);
       fclose(historyF);
@@ -209,13 +208,13 @@ void addPatientInfo(char *type, User *currentUser)
     if (strncmp(type, "E-Prescriptions", 4) == 0)
     {
       EPrescription *ePres1 = (EPrescription*)malloc(sizeof(EPrescription));
-      
+
       if(NULL == ePres1)
 	  {
 		printf("Error");
 		exit(0);
 	  }
-      
+
       const int updatePres = LookUpPres(&presF, presP, ePres1);
       UpdatePres(updatePres, &presF, presP, ePres1);
       fclose(presF);
@@ -227,13 +226,13 @@ void addPatientInfo(char *type, User *currentUser)
     if (strncmp(type, "Vitals", 4) == 0)
     {
       Vitals *eVital = (Vitals*)malloc(sizeof(Vitals));
-      
+
     if(NULL == eVital)
 	{
 		printf("Error");
 		exit(0);
 	}
-      
+
       const int updateVitals = LookUpVitals(&vitalF, vitalP, eVital);
       UpdateVitals(updateVitals, &vitalF, vitalP, eVital);
       fclose(vitalF);
@@ -266,13 +265,13 @@ void updatePatientInfo(char *type, User *currentUser)
   if (strncmp(type, "General", 4) == 0)
   {
     patientP = (Patient*)malloc(sizeof(Patient));
-    
+
     if(NULL == patientP)
 	{
 		printf("Error");
 		exit(0);
 	}
-    
+
     if (OpenFile(&patientF, "patients.dat") == 1)
     {
       printf("Unable to open file");
@@ -283,13 +282,13 @@ void updatePatientInfo(char *type, User *currentUser)
   if (strncmp(type, "History", 4) == 0)
   {
     historyP = (History*)malloc(sizeof(History));
-    
+
     if(NULL == historyP)
 	{
 		printf("Error");
 		exit(0);
 	}
-    
+
     if (OpenFile(&historyF, "history.dat") == 1)
     {
       printf("Unable to open file");
@@ -300,13 +299,13 @@ void updatePatientInfo(char *type, User *currentUser)
   if (strncmp(type, "E-Prescriptions", 4) == 0)
   {
     presP = (EPrescription*)malloc(sizeof(EPrescription));
-    
+
     if(NULL == presP)
 	{
 		printf("Error");
 		exit(0);
 	}
-    
+
     if (OpenFile(&presF, "pres.dat") == 1)
     {
       printf("Unable to open file");
@@ -317,13 +316,13 @@ void updatePatientInfo(char *type, User *currentUser)
   if (strncmp(type, "Vitals", 4) == 0)
   {
     vitalP = (Vitals*)malloc(sizeof(Vitals));
-    
+
     if(NULL == vitalP)
 	{
 		printf("Error");
 		exit(0);
 	}
-    
+
     if (OpenFile(&vitalF, "vital.dat") == 1)
     {
       printf("Unable to open file");
@@ -332,9 +331,14 @@ void updatePatientInfo(char *type, User *currentUser)
     patientCount = displayAllPatients("Vitals", &vitalF);
   }
   printf("\n\n");
-
+  char line1[256];
   char choice;
-  const int catcherS1 = scanf(" %c", &choice);
+  if (fgets(line1, sizeof(line1), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  choice = line1[0];
 
   const int id = (choice - '0')-1;
   if (id > -1 && id < patientCount)
@@ -384,7 +388,6 @@ void updatePatientInfo(char *type, User *currentUser)
     }
     return;
   }
-  const int aCatcher2 = getchar();
   printf("What do you wish to edit? \n");
 
   if (strncmp(type, "General", 4) == 0)
@@ -423,8 +426,14 @@ void updatePatientInfo(char *type, User *currentUser)
       printf("3. Latest respiratory rate\n");
       printf("4. Latest blood pressure\n\n");
   }
-  const int catcherS = scanf(" %c", &choice);
-  const int aCatcher1 = getchar();
+
+  char line2[256];
+  if (fgets(line2, sizeof(line2), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  choice = line2[0];
 
   if (strncmp(type, "General", 4) == 0)
   {
@@ -433,10 +442,10 @@ void updatePatientInfo(char *type, User *currentUser)
       char newName[55];
       printf("\n\nNew Name: ");
       const char* intCatcher16 = fgets (newName, 55, stdin);
-      const size_t len = strlen(patientP->name);
-      if (len && (patientP->name[len-1] == '\n'))
+      const size_t len1 = strlen(newName);
+      if (len1 && (newName[len1-1] == '\n'))
       {
-        patientP->name[len-1] = '\0';
+        newName[len1-1] = '\0';
       }
       UpdateName(patientP->name, newName, &historyF, &presF, &vitalF, historyP, presP, vitalP);
       strcpy(patientP->name, newName);
@@ -446,6 +455,11 @@ void updatePatientInfo(char *type, User *currentUser)
       char newDOB[11];
       printf("\n\nNew Date of Birth: ");
       const char* intCatcher15 = fgets (newDOB, 11, stdin);
+      const size_t len2 = strlen(newDOB);
+      if (len2 && (newDOB[len2-1] == '\n'))
+      {
+        newDOB[len2-1] = '\0';
+      }
       strcpy(patientP->dateOfBirth, newDOB);
     }
     else if (choice == '3')
@@ -453,6 +467,11 @@ void updatePatientInfo(char *type, User *currentUser)
       char newAddress[60];
       printf("\n\nNew Address: ");
       const char* intCatcher14 = fgets (newAddress, 60, stdin);
+      const size_t len3 = strlen(newAddress);
+      if (len3 && (newAddress[len3-1] == '\n'))
+      {
+        newAddress[len3-1] = '\0';
+      }
       strcpy(patientP->address, newAddress);
     }
     else if (choice == '4')
@@ -460,13 +479,25 @@ void updatePatientInfo(char *type, User *currentUser)
       char newInsurance[55];
       printf("\n\nNew Insurance Carrier: ");
       const char* intCatcher13 = fgets (newInsurance, 55, stdin);
+      const size_t len4 = strlen(newInsurance);
+      if (len4 && (newInsurance[len4-1] == '\n'))
+      {
+        newInsurance[len4-1] = '\0';
+      }
       strcpy(patientP->insurance, newInsurance);
     }
     else if (choice == '5')
     {
       printf("\n\nChange sex: ");
       char sex;
-      const int catcherS2 = scanf(" %c", &sex);
+      char line3[256];
+      if (fgets(line3, sizeof(line3), stdin) == NULL)
+      {
+        printf("Error in input");
+        return;
+      }
+      sex = line3[0];
+      const int aCatcher1 = getchar();
 
       if (sex == 'M' || sex == 'm')
       {
@@ -497,80 +528,84 @@ void updatePatientInfo(char *type, User *currentUser)
   {
       if (choice == '1')
       {
-		char buff[25];
-		char *endP;
-		errno = 0;
-        int newHeight;
-        printf("\n\nNew Height: ");
-		if (fgets(buff, sizeof(buff), stdin) == NULL)
-		{
-			if (puts("Error in reading input. Exiting program") == EOF)
-			{
-				exit(0);
-			}
-			newHeight = strtol(buff, &endP, 10);
+		      char buff[25];
+		      char *endP;
+		      errno = 0;
+          int newHeight;
+          printf("\n\nNew Height: ");
+      		if (fgets(buff, sizeof(buff), stdin) == NULL)
+      		{
+      			if (puts("Error in reading input. Exiting program") == EOF)
+      			{
+      				exit(0);
+      			}
+          } else
+          {
+      			newHeight = strtol(buff, &endP, 10);
 
-			if (ERANGE == errno)
-			{
-				if (puts("number out of range\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if (endP == buff)
-			{
-				if (puts("not valid numeric input\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if ('\n' != *endP && '\0' != *endP)
-			{
-				if (puts("extra characters on input line\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-		}
-        historyP->height = newHeight;
+      			if (ERANGE == errno)
+      			{
+      				if (puts("number out of range\n") == EOF)
+      				{
+      					exit(0);
+      				}
+      			}
+      			else if (endP == buff)
+      			{
+      				if (puts("not valid numeric input\n") == EOF)
+      				{
+      					exit(0);
+      				}
+      			}
+      			else if ('\n' != *endP && '\0' != *endP)
+      			{
+      				if (puts("extra characters on input line\n") == EOF)
+      				{
+      					exit(0);
+      				}
+      			}
+      		}
+          historyP->height = newHeight;
       }
       else if (choice == '2')
       {
-		char buff[25];
-		char *endP;
-		errno = 0;
+    		char buff[25];
+    		char *endP;
+    		errno = 0;
         int newWeight;
         printf("\n\nNew Weight: ");
-		if (fgets(buff, sizeof(buff), stdin) == NULL)
-		{
-			if (puts("Error in reading input. Exiting program") == EOF)
-			{
-				exit(0);
-			}
-			newWeight = strtol(buff, &endP, 10);
+    		if (fgets(buff, sizeof(buff), stdin) == NULL)
+    		{
+    			if (puts("Error in reading input. Exiting program") == EOF)
+    			{
+    				exit(0);
+    			}
+        } else
+        {
+    			newWeight = strtol(buff, &endP, 10);
 
-			if (ERANGE == errno)
-			{
-				if (puts("number out of range\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if (endP == buff)
-			{
-				if (puts("not valid numeric input\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if ('\n' != *endP && '\0' != *endP)
-			{
-				if (puts("extra characters on input line\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-		}
+    			if (ERANGE == errno)
+    			{
+    				if (puts("number out of range\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if (endP == buff)
+    			{
+    				if (puts("not valid numeric input\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if ('\n' != *endP && '\0' != *endP)
+    			{
+    				if (puts("extra characters on input line\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    		}
         historyP->weight = newWeight;
       }
       else if (choice == '3')
@@ -578,6 +613,11 @@ void updatePatientInfo(char *type, User *currentUser)
         char newComplaint[200];
         printf("\n\nNew Complaint: ");
         const char* intCatcher11 = fgets (newComplaint, 200, stdin);
+        const size_t len5 = strlen(newComplaint);
+        if (len5 && (newComplaint[len5-1] == '\n'))
+        {
+          newComplaint[len5-1] = '\0';
+        }
         strcpy(historyP->complaint, newComplaint);
       }
       else if (choice == '4')
@@ -585,6 +625,11 @@ void updatePatientInfo(char *type, User *currentUser)
         char newPast[700];
         printf("\n\nNewest Past History: ");
         const char* intCatcher10 = fgets (newPast, 700, stdin);
+        const size_t len6 = strlen(newPast);
+        if (len6 && (newPast[len6-1] == '\n'))
+        {
+          newPast[len6-1] = '\0';
+        }
         strcpy(historyP->pastHistory, newPast);
       }
       else if (choice == '5')
@@ -592,6 +637,11 @@ void updatePatientInfo(char *type, User *currentUser)
         char newReview[400];
         printf("\n\nNewest Systems Review: ");
         const char* intCatcher9 = fgets (newReview, 400, stdin);
+        const size_t len7 = strlen(newReview);
+        if (len7 && (newReview[len7-1] == '\n'))
+        {
+          newReview[len7-1] = '\0';
+        }
         strcpy(historyP->systemsReview, newReview);
       }
       else if (choice == '6')
@@ -599,6 +649,11 @@ void updatePatientInfo(char *type, User *currentUser)
         char newDis[300];
         printf("\n\nNewest Family Diseases: ");
         const char* intCatcher8 = fgets (newDis, 300, stdin);
+        const size_t len8 = strlen(newDis);
+        if (len8 && (newDis[len8-1] == '\n'))
+        {
+          newDis[len8-1] = '\0';
+        }
         strcpy(historyP->familyDiseases, newDis);
       }
       else if (choice == '7')
@@ -606,6 +661,11 @@ void updatePatientInfo(char *type, User *currentUser)
         char newSoc[600];
         printf("\n\nNewest Social History: ");
         const char* intCatcher7 = fgets (newSoc, 600, stdin);
+        const size_t len9 = strlen(newSoc);
+        if (len9 && (newSoc[len9-1] == '\n'))
+        {
+          newSoc[len9-1] = '\0';
+        }
         strcpy(historyP->socialHistory, newSoc);
       }
       else if (choice == '8')
@@ -613,6 +673,11 @@ void updatePatientInfo(char *type, User *currentUser)
         char newMeds[200];
         printf("\n\nNewest Regular Medications: ");
         const char* intCatcher6 = fgets (newMeds, 200, stdin);
+        const size_t lenA = strlen(newMeds);
+        if (lenA && (newMeds[lenA-1] == '\n'))
+        {
+          newMeds[lenA-1] = '\0';
+        }
         strcpy(historyP->regularMeds, newMeds);
       }
       else if (choice == '9')
@@ -620,6 +685,11 @@ void updatePatientInfo(char *type, User *currentUser)
         char newAll[200];
         printf("\n\nNewest Allergies: ");
         const char* intCatcher5 = fgets (newAll, 200, stdin);
+        const size_t lenB = strlen(newAll);
+        if (lenB && (newAll[lenB-1] == '\n'))
+        {
+          newAll[lenB-1] = '\0';
+        }
         strcpy(historyP->allergies, newAll);
       }
       else if (choice == '0')
@@ -627,6 +697,11 @@ void updatePatientInfo(char *type, User *currentUser)
         char newSex[600];
         printf("\n\nNewest Sexual History: ");
         const char* intCatcher4 = fgets (newSex, 600, stdin);
+        const size_t lenC = strlen(newSex);
+        if (lenC && (newSex[lenC-1] == '\n'))
+        {
+          newSex[lenC-1] = '\0';
+        }
         strcpy(historyP->sexualHistory, newSex);
       }
       else if (choice == 'A')
@@ -634,6 +709,11 @@ void updatePatientInfo(char *type, User *currentUser)
         char newCon[200];
         printf("\n\nNewest Conclusion: ");
         const char* intCatcher3 = fgets (newCon, 200, stdin);
+        const size_t lenD = strlen(newCon);
+        if (lenD && (newCon[lenD-1] == '\n'))
+        {
+          newCon[lenD-1] = '\0';
+        }
         strcpy(historyP->conclusion, newCon);
       }
       else
@@ -652,6 +732,11 @@ void updatePatientInfo(char *type, User *currentUser)
         char newMeds[300];
         printf("\n\nNew Medications: ");
         const char* intCatcher2 = fgets (newMeds, 300, stdin);
+        const size_t lenE = strlen(newMeds);
+        if (lenE && (newMeds[lenE-1] == '\n'))
+        {
+          newMeds[lenE-1] = '\0';
+        }
         strcpy(presP->medications, newMeds);
         strcpy(presP->prescriber, currentUser->name);
       }
@@ -660,6 +745,11 @@ void updatePatientInfo(char *type, User *currentUser)
         char newDos[150];
         printf("\n\nNew Dosage: ");
         const char* intCatcher1 = fgets (newDos, 150, stdin);
+        const size_t lenF = strlen(newDos);
+        if (lenF && (newDos[lenF-1] == '\n'))
+        {
+          newDos[lenF-1] = '\0';
+        }
         strcpy(presP->dosage, newDos);
         strcpy(presP->prescriber, currentUser->name);
       }
@@ -668,46 +758,54 @@ void updatePatientInfo(char *type, User *currentUser)
         char newDir[600];
         printf("\n\nNew Directions: ");
         const char* intCatcher = fgets (newDir, 150, stdin);
+        const size_t lenG = strlen(newDir);
+        if (lenG && (newDir[lenG-1] == '\n'))
+        {
+          newDir[lenG-1] = '\0';
+        }
         strcpy(presP->directions, newDir);
         strcpy(presP->prescriber, currentUser->name);
       }
       else if (choice == '4')
       {
-		char buff[25];
-		char *endP;
-		errno = 0;
-        int newDAW;
-        printf("\n\nNew DAW Code: ");
-		if (fgets(buff, sizeof(buff), stdin) == NULL)
-		{
-			if (puts("Error in reading input. Exiting program") == EOF)
-			{
-				exit(0);
-			}
-			newDAW = strtol(buff, &endP, 10);
+    		char buff[25];
+    		char *endP;
+    		errno = 0;
+            int newDAW;
+            printf("\n\nNew DAW Code: ");
+    		if (fgets(buff, sizeof(buff), stdin) == NULL)
+    		{
+    			if (puts("Error in reading input. Exiting program") == EOF)
+    			{
+    				exit(0);
+    			}
+        }
+        else
+        {
+    			newDAW = strtol(buff, &endP, 10);
 
-			if (ERANGE == errno)
-			{
-				if (puts("number out of range\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if (endP == buff)
-			{
-				if (puts("not valid numeric input\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if ('\n' != *endP && '\0' != *endP)
-			{
-				if (puts("extra characters on input line\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-		}
+    			if (ERANGE == errno)
+    			{
+    				if (puts("number out of range\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if (endP == buff)
+    			{
+    				if (puts("not valid numeric input\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if ('\n' != *endP && '\0' != *endP)
+    			{
+    				if (puts("extra characters on input line\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    		}
         presP->daw = newDAW;
         strcpy(presP->prescriber, currentUser->name);
       }
@@ -729,158 +827,169 @@ void updatePatientInfo(char *type, User *currentUser)
 
       if (choice == '1')
       {
-		char buff[25];
-		char *endP;
-		errno = 0;
+    		char buff[25];
+    		char *endP;
+    		errno = 0;
         double newTemp;
         printf("\n\nNewest body temperature: ");
-		if (fgets(buff, sizeof(buff), stdin) == NULL)
-		{
-			if (puts("Error in reading input. Exiting program") == EOF)
-			{
-				exit(0);
-			}
-			newTemp = strtod(buff, &endP);
+    		if (fgets(buff, sizeof(buff), stdin) == NULL)
+    		{
+    			if (puts("Error in reading input. Exiting program") == EOF)
+    			{
+    				exit(0);
+    			}
+        }
+        else
+        {
+    			newTemp = strtod(buff, &endP);
 
-			if (ERANGE == errno)
-			{
-				if (puts("number out of range\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if (endP == buff)
-			{
-				if (puts("not valid numeric input\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if ('\n' != *endP && '\0' != *endP)
-			{
-				if (puts("extra characters on input line\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-		}
+    			if (ERANGE == errno)
+    			{
+    				if (puts("number out of range\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if (endP == buff)
+    			{
+    				if (puts("not valid numeric input\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if ('\n' != *endP && '\0' != *endP)
+    			{
+    				if (puts("extra characters on input line\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    		}
+        printf("newTemp %lf", newTemp);
         vitalP->lastBodyTemperature = newTemp;
       }
       else if (choice == '2')
       {
-		char buff[25];
-		char *endP;
-		errno = 0;
+    		char buff[25];
+    		char *endP;
+    		errno = 0;
         int newHeart;
         printf("\n\nNewest Heart Rate: ");
-		if (fgets(buff, sizeof(buff), stdin) == NULL)
-		{
-			if (puts("Error in reading input. Exiting program") == EOF)
-			{
-				exit(0);
-			}
-			newHeart = strtol(buff, &endP, 10);
+    		if (fgets(buff, sizeof(buff), stdin) == NULL)
+    		{
+    			if (puts("Error in reading input. Exiting program") == EOF)
+    			{
+    				exit(0);
+    			}
+        } else
+        {
+    			newHeart = strtol(buff, &endP, 10);
 
-			if (ERANGE == errno)
-			{
-				if (puts("number out of range\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if (endP == buff)
-			{
-				if (puts("not valid numeric input\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if ('\n' != *endP && '\0' != *endP)
-			{
-				if (puts("extra characters on input line\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-		}
+    			if (ERANGE == errno)
+    			{
+    				if (puts("number out of range\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if (endP == buff)
+    			{
+    				if (puts("not valid numeric input\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if ('\n' != *endP && '\0' != *endP)
+    			{
+    				if (puts("extra characters on input line\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    		}
         vitalP->lastHeartRate = newHeart;
       }
       else if (choice == '3')
       {
-		char buff[25];
-		char *endP;
-		errno = 0;
+    		char buff[25];
+    		char *endP;
+    		errno = 0;
         int newResp;
         printf("\n\nNewest Respiratory Rate: ");
-		if (fgets(buff, sizeof(buff), stdin) == NULL)
-		{
-			if (puts("Error in reading input. Exiting program") == EOF)
-			{
-				exit(0);
-			}
-			newResp = strtol(buff, &endP, 10);
+    		if (fgets(buff, sizeof(buff), stdin) == NULL)
+    		{
+    			if (puts("Error in reading input. Exiting program") == EOF)
+    			{
+    				exit(0);
+    			}
+        } else
+        {
+    			newResp = strtol(buff, &endP, 10);
 
-			if (ERANGE == errno)
-			{
-				if (puts("number out of range\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if (endP == buff)
-			{
-				if (puts("not valid numeric input\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if ('\n' != *endP && '\0' != *endP)
-			{
-				if (puts("extra characters on input line\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-		}
+    			if (ERANGE == errno)
+    			{
+    				if (puts("number out of range\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if (endP == buff)
+    			{
+    				if (puts("not valid numeric input\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if ('\n' != *endP && '\0' != *endP)
+    			{
+    				if (puts("extra characters on input line\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    		}
         vitalP->lastRespiratoryRate = newResp;
       }
       else if (choice == '4')
       {
-		char buff[25];
-		char *endP;
-		errno = 0;
+    		char buff[25];
+    		char *endP;
+    		errno = 0;
         int newBlood;
         printf("\n\nNewest Blood Pressure: ");
-		if (fgets(buff, sizeof(buff), stdin) == NULL)
-		{
-			if (puts("Error in reading input. Exiting program") == EOF)
-			{
-				exit(0);
-			}
-			newBlood = strtol(buff, &endP, 10);
+    		if (fgets(buff, sizeof(buff), stdin) == NULL)
+    		{
+    			if (puts("Error in reading input. Exiting program") == EOF)
+    			{
+    				exit(0);
+    			}
+        }
+        else
+        {
+    			newBlood = strtol(buff, &endP, 10);
 
-			if (ERANGE == errno)
-			{
-				if (puts("number out of range\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if (endP == buff)
-			{
-				if (puts("not valid numeric input\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-			else if ('\n' != *endP && '\0' != *endP)
-			{
-				if (puts("extra characters on input line\n") == EOF)
-				{
-					exit(0);
-				}
-			}
-		}
+    			if (ERANGE == errno)
+    			{
+    				if (puts("number out of range\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if (endP == buff)
+    			{
+    				if (puts("not valid numeric input\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    			else if ('\n' != *endP && '\0' != *endP)
+    			{
+    				if (puts("extra characters on input line\n") == EOF)
+    				{
+    					exit(0);
+    				}
+    			}
+    		}
         vitalP->lastBloodPressure = newBlood;
       }
       else
@@ -925,13 +1034,12 @@ void removePatientInfo()
   FILE *patientF;
   Patient patientTable[MAX_PATIENTS];
   Patient *patientP = (Patient*)malloc(sizeof(Patient));
-  
+
     if(NULL == patientP)
 	{
 		printf("Error");
 		exit(0);
 	}
-  
 
   if (OpenFile(&patientF, "patients.dat") == 1)
   {
@@ -945,8 +1053,14 @@ void removePatientInfo()
   fillPatientTable(&patientF, patientTable, patientCount);
 
   printf("\n\n");
+  char line[256];
   char choice;
-  const int catcherS = scanf(" %c", &choice);
+  if (fgets(line, sizeof(line), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  choice = line[0];
 
   const int id = (choice - '0')-1;
 
@@ -963,7 +1077,13 @@ void removePatientInfo()
   }
     printf("Delete %s? (y/n)", patientP->name);
 
-    const int catcherS21 = scanf(" %c", &choice);
+    char line2[256];
+    if (fgets(line2, sizeof(line2), stdin) == NULL)
+    {
+      printf("Error in input");
+      return;
+    }
+    choice = line2[0];
 
     if (choice == 'y' || choice == 'Y')
     {
@@ -986,18 +1106,8 @@ void viewPatientInfoDoc(char *type)
 {
   FILE *patientF;
 
-  Patient *patientP;
-
   printf("Please enter the name of the patient to view \n\n");
 
-  patientP = (Patient*)malloc(sizeof(Patient));
-  
-    if(NULL == patientP)
-	{
-		printf("Error");
-		exit(0);
-	}
-  
   if (OpenFile(&patientF, "patients.dat") == 1)
   {
     printf("Unable to open file");
@@ -1005,7 +1115,6 @@ void viewPatientInfoDoc(char *type)
   }
   if(displayAllPatients("General", &patientF) != 0)
   {
-    const int aCatcher01 = getchar();
     char name[55];
     const char* intCatcher99 = fgets(name,55,stdin);
     const size_t len = strlen(name);
@@ -1013,14 +1122,10 @@ void viewPatientInfoDoc(char *type)
     {
       name[len-1] = '\0';
     }
-
     fclose(patientF);
-    free(patientP);
-    patientP = NULL;
     viewPatientInfoPat(type, name);
   }
   printf("\n\n");
-
 }
 
 void viewPatientInfoPat(char *type, char *name)
@@ -1038,13 +1143,13 @@ void viewPatientInfoPat(char *type, char *name)
   if (strncmp(type, "General", 4) == 0 || strncmp(type, "All", 3) == 0)
   {
     patientP = (Patient*)malloc(sizeof(Patient));
-    
+
     if(NULL == patientP)
-	{
-		printf("Error");
-		exit(0);
-	}
-    
+  	{
+  		printf("Error");
+  		exit(0);
+  	}
+
     if (OpenFile(&patientF, "patients.dat") == 1)
     {
       printf("Unable to open file");
@@ -1055,7 +1160,6 @@ void viewPatientInfoPat(char *type, char *name)
       const size_t catcher3 = fread(patientP, sizeof(Patient),1, patientF);
       if(strcmp(patientP->name, name) == 0)
       {
-        const int aCatcher4 = getchar();
         printf("Name: %s\n", patientP->name);
         printf("Date of Birth: %s\n", patientP->dateOfBirth);
         printf("Address: %s\n", patientP->address);
@@ -1068,13 +1172,13 @@ void viewPatientInfoPat(char *type, char *name)
   if (strncmp(type, "History", 4) == 0 || strncmp(type, "All", 3) == 0)
   {
     historyP = (History*)malloc(sizeof(History));
-    
+
     if(NULL == historyP)
-	{
-		printf("Error");
-		exit(0);
-	}
-    
+  	{
+  		printf("Error");
+  		exit(0);
+  	}
+
     if (OpenFile(&historyF, "history.dat") == 1)
     {
       printf("Unable to open file");
@@ -1085,7 +1189,6 @@ void viewPatientInfoPat(char *type, char *name)
       const size_t catcher2 = fread(historyP, sizeof(History),1, historyF);
       if(strcmp(historyP->name, name) == 0)
       {
-        const int aCatcher3 = getchar();
         printf("Name: %s\n", historyP->name);
         printf("Height: %d\n", historyP->height);
         printf("Weight: %d\n", historyP->weight);
@@ -1105,13 +1208,13 @@ void viewPatientInfoPat(char *type, char *name)
   if (strncmp(type, "E-Prescriptions", 4) == 0 || strncmp(type, "All", 3) == 0)
   {
     presP = (EPrescription*)malloc(sizeof(EPrescription));
-    
+
     if(NULL == presP)
-	{
-		printf("Error");
-		exit(0);
-	}
-    
+  	{
+  		printf("Error");
+  		exit(0);
+  	}
+
     if (OpenFile(&presF, "pres.dat") == 1)
     {
       printf("Unable to open file");
@@ -1122,7 +1225,6 @@ void viewPatientInfoPat(char *type, char *name)
       const size_t catcher1 = fread(presP, sizeof(EPrescription),1, presF);
       if(strcmp(presP->name, name) == 0)
       {
-        const int aCatcher2 = getchar();
         printf("Name: %s\n", presP->name);
         printf("Medications: %s\n", presP->medications);
         printf("Dosage: %s\n", presP->dosage);
@@ -1135,13 +1237,13 @@ void viewPatientInfoPat(char *type, char *name)
   if (strncmp(type, "Vitals", 4) == 0 || strncmp(type, "All", 3) == 0)
   {
     vitalP = (Vitals*)malloc(sizeof(Vitals));
-    
+
     if(NULL == vitalP)
-	{
-		printf("Error");
-		exit(0);
-	}
-    
+  	{
+  		printf("Error");
+  		exit(0);
+  	}
+
     if (OpenFile(&vitalF, "vital.dat") == 1)
     {
       printf("Unable to open file");
@@ -1152,7 +1254,6 @@ void viewPatientInfoPat(char *type, char *name)
       const size_t catcher77 = fread(vitalP, sizeof(Vitals),1, vitalF);
       if(strcmp(vitalP->name, name) == 0)
       {
-        const int aCatcher1 = getchar();
         printf("Name: %s\n", vitalP->name);
         printf("Latest body temperature: %f", vitalP->lastBodyTemperature);
         printf("\nLatest heart rate: %d", vitalP->lastHeartRate);
@@ -1194,15 +1295,36 @@ void CreatePatientInfo(Patient *newPatient)
 {
   printf("Please enter their date of birth: ");
   const char* intCatcher2 = fgets(newPatient->dateOfBirth, 11, stdin);
+  const size_t len = strlen(newPatient->dateOfBirth);
+  if (len && (newPatient->dateOfBirth[len-1] == '\n'))
+  {
+    newPatient->dateOfBirth[len-1] = '\0';
+  }
 
   printf("Please enter their address: ");
   const char* intCatcher1 = fgets(newPatient->address, 60, stdin);
+  const size_t len2 = strlen(newPatient->address);
+  if (len2 && (newPatient->address[len2-1] == '\n'))
+  {
+    newPatient->address[len2-1] = '\0';
+  }
 
   printf("Please enter their insurance carrier: ");
   const char* intCatcher = fgets(newPatient->insurance, 55, stdin);
+  const size_t len3 = strlen(newPatient->insurance);
+  if (len3 && (newPatient->insurance[len3-1] == '\n'))
+  {
+    newPatient->insurance[len3-1] = '\0';
+  }
 
   printf("Please enter their sex: ");
-  const int catcherS = scanf(" %c", &newPatient->sex);
+  char line[256];
+  if (fgets(line, sizeof(line), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  newPatient->sex = line[0];
 }
 
 void CreateHistory(History *history1)
@@ -1217,6 +1339,8 @@ void CreateHistory(History *history1)
 	  {
 		  exit(0);
 	  }
+  } else
+  {
 	  history1->height = strtol(buff1, &endP1, 10);
 
 	  if (ERANGE == errno)
@@ -1252,6 +1376,9 @@ void CreateHistory(History *history1)
 	  {
 		  exit(0);
 	  }
+  }
+  else
+  {
 	  history1->weight = strtol(buff2, &endP2, 10);
 
 	  if (ERANGE == errno)
@@ -1277,33 +1404,77 @@ void CreateHistory(History *history1)
 	  }
   }
 
-  const int aCatcher = getchar();
   printf("Please enter their chief complaint: ");
   const char* intCatcher8 = fgets(history1->complaint, 200, stdin);
+  const size_t len = strlen(history1->complaint);
+  if (len && (history1->complaint[len-1] == '\n'))
+  {
+    history1->complaint[len-1] = '\0';
+  }
 
   printf("Please enter any past medical history: ");
   const char* intCatcher7 = fgets(history1->pastHistory, 700, stdin);
+  const size_t len2 = strlen(history1->pastHistory);
+  if (len2 && (history1->pastHistory[len2-1] == '\n'))
+  {
+    history1->pastHistory[len2-1] = '\0';
+  }
 
   printf("Please enter their systems review, if applicable: ");
   const char* intCatcher6 = fgets(history1->systemsReview, 400, stdin);
+  const size_t len3 = strlen(history1->systemsReview);
+  if (len3 && (history1->systemsReview[len3-1] == '\n'))
+  {
+    history1->systemsReview[len3-1] = '\0';
+  }
 
   printf("Please enter any family diseases: ");
   const char* intCatcher5 = fgets(history1->familyDiseases, 300, stdin);
+  const size_t len4 = strlen(history1->familyDiseases);
+  if (len4 && (history1->familyDiseases[len4-1] == '\n'))
+  {
+    history1->familyDiseases[len4-1] = '\0';
+  }
 
   printf("Please enter their social history: ");
   const char* intCatcher4 = fgets(history1->socialHistory, 600, stdin);
+  const size_t len5 = strlen(history1->socialHistory);
+  if (len5 && (history1->socialHistory[len5-1] == '\n'))
+  {
+    history1->socialHistory[len5-1] = '\0';
+  }
 
   printf("Please enter any regular medications: ");
   const char* intCatcher3 = fgets(history1->regularMeds, 200, stdin);
+  const size_t len6 = strlen(history1->regularMeds);
+  if (len6 && (history1->regularMeds[len6-1] == '\n'))
+  {
+    history1->regularMeds[len6-1] = '\0';
+  }
 
   printf("Please enter any allergies: ");
   const char* intCatcher2 = fgets(history1->allergies, 200, stdin);
+  const size_t len7 = strlen(history1->allergies);
+  if (len7 && (history1->allergies[len7-1] == '\n'))
+  {
+    history1->allergies[len7-1] = '\0';
+  }
 
   printf("Please enter their sexual history, if applicable: ");
   const char* intCatcher1 = fgets(history1->sexualHistory, 600, stdin);
+  const size_t len8 = strlen(history1->sexualHistory);
+  if (len8 && (history1->sexualHistory[len8-1] == '\n'))
+  {
+    history1->sexualHistory[len8-1] = '\0';
+  }
 
   printf("Conclusion: ");
   const char* intCatcher = fgets(history1->conclusion, 200, stdin);
+  const size_t len9 = strlen(history1->conclusion);
+  if (len9 && (history1->conclusion[len9-1] == '\n'))
+  {
+    history1->conclusion[len9-1] = '\0';
+  }
 
   printf("\n");
 }
@@ -1313,12 +1484,27 @@ void CreatePres(EPrescription *pres, User *currentUser)
   strcpy(pres->prescriber, currentUser->name);
   printf("Please enter the patient's medications: ");
   const char* intCatcher2 = fgets(pres->medications, 300, stdin);
+  const size_t len = strlen(pres->medications);
+  if (len && (pres->medications[len-1] == '\n'))
+  {
+    pres->medications[len-1] = '\0';
+  }
 
   printf("Please enter the dosage information: ");
   const char* intCatcher1 = fgets(pres->dosage, 150, stdin);
+  const size_t len2 = strlen(pres->dosage);
+  if (len2 && (pres->dosage[len2-1] == '\n'))
+  {
+    pres->dosage[len2-1] = '\0';
+  }
 
   printf("Please enter directions: ");
   const char* intCatcher = fgets(pres->directions, 600, stdin);
+  const size_t len3 = strlen(pres->directions);
+  if (len3 && (pres->directions[len3-1] == '\n'))
+  {
+    pres->directions[len3-1] = '\0';
+  }
 
   printf("Please enter the DAW Code: ");
   char buff[25];
@@ -1330,6 +1516,8 @@ void CreatePres(EPrescription *pres, User *currentUser)
 	  {
 		  exit(0);
 	  }
+  } else
+  {
 	  pres->daw = strtol(buff, &endP, 10);
 
 	  if (ERANGE == errno)
@@ -1371,7 +1559,9 @@ void CreateVitals(Vitals *vitals1)
 	  {
 		  exit(0);
 	  }
-	  newTemp = strtod(buff1, &endP1);
+  } else
+  {
+    newTemp = strtod(buff1, &endP1);
 
 	  if (ERANGE == errno)
 	  {
@@ -1397,6 +1587,7 @@ void CreateVitals(Vitals *vitals1)
   }
   vitals1->lastBodyTemperature = newTemp;
 
+
   printf("\nPlease enter their latest heart rate: ");
   int newHeart;
   char buff2[25];
@@ -1408,6 +1599,8 @@ void CreateVitals(Vitals *vitals1)
 	  {
 		  exit(0);
 	  }
+  } else
+  {
 	  newHeart = strtol(buff2, &endP2, 10);
 
 	  if (ERANGE == errno)
@@ -1445,6 +1638,8 @@ void CreateVitals(Vitals *vitals1)
 	  {
 		  exit(0);
 	  }
+  } else
+  {
 	  newResp = strtol(buff3, &endP3, 10);
 
 	  if (ERANGE == errno)
@@ -1482,6 +1677,8 @@ void CreateVitals(Vitals *vitals1)
 	  {
 		  exit(0);
 	  }
+  } else
+  {
 	  newBlood = strtol(buff4, &endP4, 10);
 
 	  if (ERANGE == errno)
@@ -1576,7 +1773,6 @@ int LookUpVitals(FILE** file, Vitals *vitalsToLookUp, Vitals *existingVitals)
 /* Determines whether to update existing info or add new patient */
 void UpdateGeneralInfo(int updatePatient, FILE** file, Patient *newPatient, Patient *existingPatient)
 {
-  unsigned char choice = ' ';
   /* add new patient? */
   if (updatePatient == 0)
   {
@@ -1603,7 +1799,15 @@ void UpdateGeneralInfo(int updatePatient, FILE** file, Patient *newPatient, Pati
     printf("\n");
   }
 
-  const int catcherS = scanf(" %c", &choice);
+  char line[256];
+  char choice;
+  if (fgets(line, sizeof(line), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  choice = line[0];
+
   if (choice == 'Y' || choice == 'y')
   {
     if (updatePatient == 0)
@@ -1623,7 +1827,6 @@ void UpdateGeneralInfo(int updatePatient, FILE** file, Patient *newPatient, Pati
 
 void UpdateHistory(int updateHistory, FILE** file, History *newHistory, History *existingHistory)
 {
-  unsigned char choice = ' ';
   /* add new patient? */
   if (updateHistory == 0)
   {
@@ -1662,8 +1865,15 @@ void UpdateHistory(int updateHistory, FILE** file, History *newHistory, History 
     printf("Do you wish to make changes? (y/n) \n");
   }
   printf("\n");
+  char line[256];
+  char choice;
+  if (fgets(line, sizeof(line), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  choice = line[0];
 
-  const int catcherS = scanf(" %c", &choice);
   if (choice == 'Y' || choice == 'y')
   {
     if (updateHistory == 0)
@@ -1683,7 +1893,6 @@ void UpdateHistory(int updateHistory, FILE** file, History *newHistory, History 
 
 void UpdatePres(int updatePres, FILE** file, EPrescription *newPres, EPrescription *existingPres)
 {
-  unsigned char choice = ' ';
   /* add new patient? */
   if (updatePres == 0)
   {
@@ -1709,8 +1918,15 @@ void UpdatePres(int updatePres, FILE** file, EPrescription *newPres, EPrescripti
 
     printf("\n");
   }
+  char line[256];
+  char choice;
+  if (fgets(line, sizeof(line), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  choice = line[0];
 
-  const int catcherS = scanf(" %c", &choice);
   if (choice == 'Y' || choice == 'y')
   {
     if (updatePres == 0)
@@ -1730,7 +1946,6 @@ void UpdatePres(int updatePres, FILE** file, EPrescription *newPres, EPrescripti
 
 void UpdateVitals(int updateVitals, FILE** file, Vitals *newVitals, Vitals *existingVitals)
 {
-  unsigned char choice = ' ';
   /* add new patient? */
   if (updateVitals == 0)
   {
@@ -1756,8 +1971,15 @@ void UpdateVitals(int updateVitals, FILE** file, Vitals *newVitals, Vitals *exis
 
     printf("\n");
   }
+  char line[256];
+  char choice;
+  if (fgets(line, sizeof(line), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  choice = line[0];
 
-  const int catcherS = scanf(" %c", &choice);
   if (choice == 'Y' || choice == 'y')
   {
     if (updateVitals == 0)
@@ -1940,13 +2162,13 @@ void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE 
   History *hist, EPrescription *pres, Vitals *vit)
 {
   hist = (History*)malloc(sizeof(History));
-  
-    if(NULL == hist)
+
+  if(NULL == hist)
 	{
 		printf("Error");
 		exit(0);
 	}
-  
+
   if (OpenFile(hFile, "history.dat") == 1)
   {
     printf("Unable to open file");
@@ -1954,13 +2176,13 @@ void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE 
   }
 
   pres = (EPrescription*)malloc(sizeof(EPrescription));
-  
-    if(NULL == pres)
+
+  if(NULL == pres)
 	{
 		printf("Error");
 		exit(0);
 	}
-  
+
   if (OpenFile(prFile, "pres.dat") == 1)
   {
     printf("Unable to open file");
@@ -1968,13 +2190,13 @@ void UpdateName(char *oldName, char *newName, FILE **hFile, FILE **prFile, FILE 
   }
 
   vit = (Vitals*)malloc(sizeof(Vitals));
-  
-    if(NULL == vit)
+
+  if(NULL == vit)
 	{
 		printf("Error");
 		exit(0);
 	}
-  
+
   if (OpenFile(vFile, "vital.dat") == 1)
   {
     printf("Unable to open file");
@@ -2041,13 +2263,11 @@ void RewritePatientsFile(FILE** file, Patient patientTable[], int size, Patient 
   {
     return;
   }
-  //fseek(*file, 0, SEEK_SET);
+
   int i;
   for (i = 0; i < size; i++)
   {
     Patient p = patientTable[i];
-    //printf("patienttable %d name %s", i, patientTable[i].name);
-    //printf("p %d name %s", i, p.name);
     if ((strncmp(p.name, patientToRemove->name, 4) == 0) &&
     (strncmp(p.dateOfBirth, patientToRemove->dateOfBirth, 4) == 0))
     {

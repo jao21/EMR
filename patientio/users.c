@@ -25,7 +25,7 @@ void addUserAccount()
 {
   FILE *userF;
   User *userP = (User*)malloc(sizeof(User));
-  
+
     if(NULL == userP)
 	{
 		printf("Error");
@@ -41,13 +41,13 @@ void addUserAccount()
   CreateUserInfo(userP);
 
   User *exUserP = (User*)malloc(sizeof(User));
-  
+
     if(NULL == exUserP)
 	{
 		printf("Error");
 		exit(0);
 	}
-	
+
   const int updateUser = LookUpUser(&userF, userP, exUserP);
 
   UpdateAccounts(updateUser, &userF, userP, exUserP);
@@ -62,7 +62,7 @@ void updateUserAccount()
 {
   FILE *userF;
   User *userP = (User*)malloc(sizeof(User));
-  
+
     if(NULL == userP)
 	{
 		printf("Error");
@@ -80,8 +80,14 @@ void updateUserAccount()
   const int userCount = displayAllUsers(&userF);
 
   printf("\n\n");
+  char line1[256];
   char choice;
-  const int catcherS1 = scanf(" %c", &choice);
+  if (fgets(line1, sizeof(line1), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  choice = line1[0];
 
   const int id = (choice - '0')-1;
 
@@ -108,14 +114,24 @@ void updateUserAccount()
     }
     printf("\n");
 
-    const int catcherS = scanf(" %c", &choice);
+    char line2[256];
+    if (fgets(line2, sizeof(line2), stdin) == NULL)
+    {
+      printf("Error in input");
+      return;
+    }
+    choice = line2[0];
 
-    const int aCatcher = getchar();
     if (choice == '1')
     {
       char newName[55];
       printf("\n\nNew Name: ");
       const char* intCatcher5 = fgets (newName, 55, stdin);
+      const size_t nameLen = strlen(newName);
+      if (nameLen && (newName[nameLen-1] == '\n'))
+      {
+        newName[nameLen-1] = '\0';
+      }
       strcpy(userP->name, newName);
     }
     else if (choice == '2')
@@ -123,7 +139,11 @@ void updateUserAccount()
       char newUsername[15];
       printf("\n\nNew Username: ");
       const char* intCatcher4 = fgets (newUsername, 15, stdin);
-
+      const size_t userLen = strlen(newUsername);
+      if (userLen && (newUsername[userLen-1] == '\n'))
+      {
+        newUsername[userLen-1] = '\0';
+      }
       strcpy(userP->userName, newUsername);
     }
     else if (choice == '3')
@@ -131,7 +151,11 @@ void updateUserAccount()
       char newPassword[15];
       printf("\n\nNew Password: ");
       const char* intCatcher3 = fgets (newPassword, 15, stdin);
-
+      const size_t pLen = strlen(newPassword);
+      if (pLen && (newPassword[pLen-1] == '\n'))
+      {
+        newPassword[pLen-1] = '\0';
+      }
       strcpy(userP->password, newPassword);
     }
     else if (choice == '4')
@@ -139,12 +163,22 @@ void updateUserAccount()
       char newRole[8];
       printf("\n\nNew Role: ");
       const char* intCatcher2 = fgets (newRole, 8, stdin);
+      const size_t rLen = strlen(newRole);
+      if (rLen && (newRole[rLen-1] == '\n'))
+      {
+        newRole[rLen-1] = '\0';
+      }
       strcpy(userP->role, newRole);
 
       if((strcmp(userP->role, "Doctor") == 0) || (strcmp(userP->role, "doctor") == 0))
       {
         printf("Please enter their department: ");
         const char* intCatcher1 = fgets(userP->department, 50, stdin);
+        const size_t dLen = strlen(userP->department);
+        if (dLen && (userP->department[dLen-1] == '\n'))
+        {
+          userP->department[dLen-1] = '\0';
+        }
       }
     }
     else if (choice == '5' && ((strcmp(userP->role, "Doctor") == 0) || (strcmp(userP->role, "doctor") == 0)))
@@ -152,6 +186,11 @@ void updateUserAccount()
       char newDepartment[50];
       printf("\n\nNew Department: ");
       const char* intCatcher = fgets (newDepartment, 50, stdin);
+      const size_t dLen2 = strlen(newDepartment);
+      if (dLen2 && (newDepartment[dLen2-1] == '\n'))
+      {
+        newDepartment[dLen2-1] = '\0';
+      }
       strcpy(userP->department, newDepartment);
     }
     else
@@ -174,7 +213,7 @@ void removeUserAccount()
   FILE *userF;
   User userTable[MAX_USERS];
   User *userP = (User*)malloc(sizeof(User));
-  
+
     if(NULL == userP)
 	{
 		printf("Error");
@@ -192,11 +231,15 @@ void removeUserAccount()
   const int userCount = displayAllUsers(&userF);
   fillUserTable(&userF, userTable, userCount);
 
-  printf("User count is %d\n", userCount);
-
   printf("\n\n");
+  char line1[256];
   char choice;
-  const int catcherS1 = scanf(" %c", &choice);
+  if (fgets(line1, sizeof(line1), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  choice = line1[0];
 
   const int id = (choice - '0')-1;
 
@@ -213,7 +256,13 @@ void removeUserAccount()
   }
 
     printf("Delete %s? (y/n)", userP->name);
-    const int catcherS = scanf(" %c", &choice);
+    char line2[256];
+    if (fgets(line2, sizeof(line2), stdin) == NULL)
+    {
+      printf("Error in input");
+      return;
+    }
+    choice = line2[0];
 
     if (choice == 'y' || choice == 'Y')
     {
@@ -237,7 +286,7 @@ void viewUserAccount()
 {
   FILE *userF;
   User *userP = (User*)malloc(sizeof(User));
-  
+
     if(NULL == userP)
 	{
 		printf("Error");
@@ -254,8 +303,15 @@ void viewUserAccount()
 
   const int userCount = displayAllUsers(&userF);
   printf("\n\n");
+
+  char line[256];
   char choice;
-  const int catcherS = scanf(" %c", &choice);
+  if (fgets(line, sizeof(line), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  choice = line[0];
 
   const int id = (choice - '0')-1;
 
@@ -291,7 +347,7 @@ int compareAccounts(User *userToCompare)
 {
   FILE *userF;
   User *userP = (User*)malloc(sizeof(User));
-  
+
     if(NULL == userP)
 	{
 		printf("Error");
@@ -308,6 +364,8 @@ int compareAccounts(User *userToCompare)
   while(!feof(userF))
   {
     const size_t catcher = fread(userP, sizeof(User),1, userF);
+    printf("User %s\n", userP->userName);
+    printf("Pass %s \n", userP->password);
     if((strncmp(userP->userName, userToCompare->userName, 15) == 0)
     && (strncmp(userP->password, userToCompare->password, 15) == 0))
     {
@@ -337,31 +395,49 @@ int compareAccounts(User *userToCompare)
 void CreateUserInfo(User *newUser)
 {
   char role[8];
-  const int aCatcher = getchar();
+  //const int aCatcher = getchar();
   printf("Please enter the user's name: ");
   const char* intCatcher = fgets(newUser->name, 55, stdin);
-  const size_t len = strlen(newUser->name);
-  if (len && (newUser->name[len-1] == '\n'))
+  const size_t nameLen = strlen(newUser->name);
+  if (nameLen && (newUser->name[nameLen-1] == '\n'))
   {
-    newUser->name[len-1] = '\0';
+    newUser->name[nameLen-1] = '\0';
   }
 
   printf("Please enter their username: ");
   const char* catcher1 = fgets(newUser->userName, 15, stdin);
-
+  const size_t userLen = strlen(newUser->userName);
+  if (userLen && (newUser->userName[userLen-1] == '\n'))
+  {
+    newUser->userName[userLen-1] = '\0';
+  }
 
   printf("Please enter their password: ");
   const char* catcher2 = fgets(newUser->password, 15, stdin);
-
+  const size_t pLen = strlen(newUser->password);
+  if (pLen && (newUser->password[pLen-1] == '\n'))
+  {
+    newUser->password[pLen-1] = '\0';
+  }
 
   printf("Please enter their role: ");
   const char* catcher3 = fgets(role, 8, stdin);
   strcpy(newUser->role, role);
+  const size_t rLen = strlen(newUser->role);
+  if (rLen && (newUser->role[rLen-1] == '\n'))
+  {
+    newUser->role[rLen-1] = '\0';
+  }
 
   if((strncmp(newUser->role, "Doc", 3) == 0) || (strncmp(newUser->role, "doc", 3) == 0))
   {
     printf("Please enter their department: ");
     const char* catcher4 = fgets(newUser->department, 50, stdin);
+    const size_t dLen = strlen(newUser->department);
+    if (dLen && (newUser->department[dLen-1] == '\n'))
+    {
+      newUser->department[dLen-1] = '\0';
+    }
   }
   else
   {
@@ -391,7 +467,6 @@ int LookUpUser(FILE** file, User *userToLookUp, User *existingUser)
 
 void UpdateAccounts(int updateUser, FILE** file, User *newUser, User *existingUser)
 {
-  unsigned char choice = ' ';
   /* add new user? */
   if (updateUser == 0)
   {
@@ -415,7 +490,7 @@ void UpdateAccounts(int updateUser, FILE** file, User *newUser, User *existingUs
     printf("User not added\n\n");
     return;
   }
-  else /* update existing patient? */
+  else
   {
     printf("\nUser found: \n\n");
 
@@ -449,8 +524,16 @@ void UpdateAccounts(int updateUser, FILE** file, User *newUser, User *existingUs
     }
     printf("\n");
   }
+  const int aCatcher = getchar();
+  char line[256];
+  char choice;
+  if (fgets(line, sizeof(line), stdin) == NULL)
+  {
+    printf("Error in input");
+    return;
+  }
+  choice = line[0];
 
-  const int catcherS = scanf(" %c", &choice);
   if (choice == 'Y' || choice == 'y')
   {
     if (updateUser == 0)

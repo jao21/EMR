@@ -40,20 +40,21 @@ int compareAccounts(User *userToCompare);
 
 void adminMenu (User *userLoggedIn) //First menu for Admin
 {
+    char line[256];
     char choice;
     do
     {
-    //  int inc = 0;
-
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Patient Records");
       printf ("\n2: User Accounts");
       printf ("\nPress q to logout");
       printf ("\n\nOption: ");
-      if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      if (fgets(line, sizeof(line), stdin) == NULL)
       {
-    	choice = choice;
-	  }
+        printf("Error in input");
+        return;
+      }
+      choice = line[0];
 
       switch(choice)
 	    {
@@ -74,11 +75,10 @@ void adminMenu (User *userLoggedIn) //First menu for Admin
 
 void doctorMenu (User *userLoggedIn) //First menu for Doctor
 {
+    char line[256];
     char choice;
     do
     {
-    //  int inc = 0;
-
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Patient Medical Chart");
       printf ("\n2: Physician Orders");
@@ -88,11 +88,12 @@ void doctorMenu (User *userLoggedIn) //First menu for Doctor
       printf ("\n6: Patient Records");
       printf ("\nPress q to logout");
       printf ("\n\nOption: ");
-      if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      if (fgets(line, sizeof(line), stdin) == NULL)
       {
-    	choice = choice;
-	  }
-
+        printf("Error in input");
+        return;
+      }
+      choice = line[0];
 
       switch(choice)
 	    {
@@ -125,11 +126,10 @@ void doctorMenu (User *userLoggedIn) //First menu for Doctor
 
 void patientMenu (User *userLoggedIn) //First Menu for Nurse
 {
+    char line[256];
     char choice;
     do
     {
-    //  int inc = 0;
-
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Patient Medical History");
       printf ("\n2: E-Prescriptions");
@@ -137,11 +137,12 @@ void patientMenu (User *userLoggedIn) //First Menu for Nurse
       printf ("\n4: General Info");
       printf ("\nPress q to logout");
       printf ("\n\nOption: ");
-      if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      if (fgets(line, sizeof(line), stdin) == NULL)
       {
-    	choice = choice;
-	  }
-
+        printf("Error in input");
+        return;
+      }
+      choice = line[0];
 
       switch(choice)
 	    {
@@ -169,20 +170,20 @@ void patientMenu (User *userLoggedIn) //First Menu for Nurse
 
 void auditorMenu (User *userLoggedIn) //First menu for Auditor
 {
+    char line[256];
     char choice;
     do
     {
-   //   int inc = 0;
-
       printf ("\n\nPlease choose from the following options: ");
       printf ("\n1: Logs");
       printf ("\nPress q to logout");
       printf ("\n\nOption: ");
-      if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
+      if (fgets(line, sizeof(line), stdin) == NULL)
       {
-    	choice = choice;
-	  }
-
+        printf("Error in input");
+        return;
+      }
+      choice = line[0];
 
       switch(choice)
 	    {
@@ -195,12 +196,12 @@ void auditorMenu (User *userLoggedIn) //First menu for Auditor
 	        default:
 	            printf ("Invalid Option!");
 	    }
-
     } while (choice != 'q' || choice != 'Q');
 }
 
 void patientMedChart(User *userLoggedIn) //This menu displays actions that can be performed for the Patient Medical Chart
 {
+    char line[256];
     char choice;
     if(strncmp(userLoggedIn->role,"Doctor", 4) == 0)
     {
@@ -209,11 +210,12 @@ void patientMedChart(User *userLoggedIn) //This menu displays actions that can b
         printf("Selected -> Medical Charts \n");
         printf("1. View \n");
         printf("Press q or Q to exit \n\n");
-      if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
-      {
-    	choice = choice;
-	  }
-
+        if (fgets(line, sizeof(line), stdin) == NULL)
+        {
+          printf("Error in input");
+          return;
+        }
+        choice = line[0];
 
         if (choice == '1')
         {
@@ -235,6 +237,7 @@ void patientMedChart(User *userLoggedIn) //This menu displays actions that can b
 
 void patientMedHist(User *userLoggedIn) //This menu displays actions that can be performed for the Patient Medical History
 {
+    char line[256];
     char choice;
     if(strncmp(userLoggedIn->role,"Patient", 4) == 0)
     {
@@ -249,11 +252,12 @@ void patientMedHist(User *userLoggedIn) //This menu displays actions that can be
         printf("2. Add \n");
         printf("3. Update \n");
         printf("Press q or Q to exit \n\n");
-      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
-      	{
-    		choice = choice;
-	  	}
-
+        if (fgets(line, sizeof(line), stdin) == NULL)
+        {
+          printf("Error in input");
+          return;
+        }
+        choice = line[0];
 
         if (choice == '1')
         {
@@ -284,6 +288,7 @@ void patientMedHist(User *userLoggedIn) //This menu displays actions that can be
 
 void ePrescript(User *userLoggedIn) //This menu displays actions that can be performed for the E-Prescriptions
 {
+    char line[256];
     char choice;
     if(strncmp(userLoggedIn->role,"Patient", 4) == 0)
     {
@@ -298,11 +303,12 @@ void ePrescript(User *userLoggedIn) //This menu displays actions that can be per
         printf("2. Add \n");
         printf("3. Update \n");
         printf("Press q or Q to exit \n\n");
-      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
-      	{
-    		choice = choice;
-	  	}
-
+        if (fgets(line, sizeof(line), stdin) == NULL)
+        {
+          printf("Error in input");
+          return;
+        }
+        choice = line[0];
 
         if (choice == '1')
         {
@@ -332,6 +338,7 @@ void ePrescript(User *userLoggedIn) //This menu displays actions that can be per
 
 void vital(User *userLoggedIn) //This menu displays actions that can be performed for the Patient's vitals
 {
+    char line[256];
     char choice;
     if(strncmp(userLoggedIn->role,"Patient", 4) == 0)
     {
@@ -346,11 +353,12 @@ void vital(User *userLoggedIn) //This menu displays actions that can be performe
         printf("2. Add \n");
         printf("3. Update \n");
         printf("Press q or Q to exit \n\n");
-      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
-      	{
-    		choice = choice;
-	  	}
-
+        if (fgets(line, sizeof(line), stdin) == NULL)
+        {
+          printf("Error in input");
+          return;
+        }
+        choice = line[0];
 
         if (choice == '1')
         {
@@ -392,6 +400,7 @@ void logFunc(User *userLoggedIn) //This menu displays actions that can be perfor
 
 void physicianOrder(User *userLoggedIn) //This menu displays actions that can be displayed for the Personal Medical Info
 {
+    char line[256];
     char choice;
     if(strncmp(userLoggedIn->role,"Doctor", 4) == 0)
     {
@@ -402,11 +411,12 @@ void physicianOrder(User *userLoggedIn) //This menu displays actions that can be
         printf("2. Write \n");
         printf("3. Update \n");
         printf("Press q or Q to exit \n\n");
-      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
-      	{
-    		choice = choice;
-	  	}
-
+        if (fgets(line, sizeof(line), stdin) == NULL)
+        {
+          printf("Error in input");
+          return;
+        }
+        choice = line[0];
 
         if (choice == '1')
         {
@@ -436,8 +446,9 @@ void physicianOrder(User *userLoggedIn) //This menu displays actions that can be
 
 void patientRec(User *userLoggedIn) //This menu displays actions that can be displayed for the Personal Medical Info
 {
+    char line[256];
     char choice;
-    if(strncmp(userLoggedIn->role,"Admin", 4) == 0)
+    if(strncmp(userLoggedIn->role,"Admin", 4) == 0 || strncmp(userLoggedIn->role,"admin", 4) == 0)
     {
       do
       {
@@ -446,11 +457,12 @@ void patientRec(User *userLoggedIn) //This menu displays actions that can be dis
         printf("2. Update \n");
         printf("3. Remove \n");
         printf("Press q or Q to exit \n\n");
-     	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
-      	{
-    		choice = choice;
-	 	}
-
+        if (fgets(line, sizeof(line), stdin) == NULL)
+        {
+          printf("Error in input");
+          return;
+        }
+        choice = line[0];
 
         if (choice == '1')
         {
@@ -485,11 +497,12 @@ void patientRec(User *userLoggedIn) //This menu displays actions that can be dis
         printf("2. Add \n");
         printf("3. Update \n");
         printf("Press q or Q to exit \n\n");
-      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
-      	{
-    		choice = choice;
-	  	}
-
+        if (fgets(line, sizeof(line), stdin) == NULL)
+        {
+          printf("Error in input");
+          return;
+        }
+        choice = line[0];
 
         if (choice == '1')
         {
@@ -519,6 +532,7 @@ void patientRec(User *userLoggedIn) //This menu displays actions that can be dis
 
 void userAcc(User *userLoggedIn) //This menu displays actions that can be displayed for the Personal Medical Info
 {
+    char line[256];
     char choice;
     if(strncmp(userLoggedIn->role,"Admin", 4) == 0)
     {
@@ -530,11 +544,12 @@ void userAcc(User *userLoggedIn) //This menu displays actions that can be displa
         printf("3. Update \n");
         printf("4. Remove \n");
         printf("Press q or Q to exit \n\n");
-      	if (fgets(&choice, BUFFERSIZE, stdin) != NULL)
-      	{
-    		choice = choice;
-	  	}
-
+        if (fgets(line, sizeof(line), stdin) == NULL)
+        {
+          printf("Error in input");
+          return;
+        }
+        choice = line[0];
 
         if (choice == '1')
         {

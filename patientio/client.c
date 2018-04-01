@@ -17,7 +17,7 @@ void login()
 	do
 	{
 		User *nUser = (User*)malloc(sizeof(User));
-		
+
 		if(NULL == nUser)
 		{
 			//may want better error handling here
@@ -31,6 +31,11 @@ void login()
 			printf("I/O error");
 			exit(0);
 		}
+		const size_t uLen = strlen(nUser->userName);
+		if (uLen && (nUser->userName[uLen-1] == '\n'))
+		{
+			nUser->userName[uLen-1] = '\0';
+		}
 
 		printf("Please enter your password\n");
 
@@ -38,6 +43,11 @@ void login()
 		{
 			printf("I/O error");
 			exit(0);
+		}
+		const size_t pLen = strlen(nUser->password);
+		if (pLen && (nUser->password[pLen-1] == '\n'))
+		{
+			nUser->password[pLen-1] = '\0';
 		}
 		printf("\n");
 
