@@ -364,8 +364,6 @@ int compareAccounts(User *userToCompare)
   while(!feof(userF))
   {
     const size_t catcher = fread(userP, sizeof(User),1, userF);
-    printf("User %s\n", userP->userName);
-    printf("Pass %s \n", userP->password);
     if((strncmp(userP->userName, userToCompare->userName, 15) == 0)
     && (strncmp(userP->password, userToCompare->password, 15) == 0))
     {
