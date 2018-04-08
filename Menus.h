@@ -11,4 +11,6 @@ void patientMenu(User *userLoggedIn);
 
 void auditorMenu(User *userLoggedIn);
 
+//fixed menus.h title
+
 #endif
